@@ -30,24 +30,19 @@ export interface ResourcePatch {
   intArray?: number[];
 }
 
-/** */
-export interface ResourcePatchResourceMergeAndPatch {
+/** undefined */
+export interface InnerModelResourceMergeAndPatch {
+  name?: string | null;
   description?: string | null;
-  map?: Record<string, InnerModel> | null;
-  array?: Array<InnerModel> | null;
-  intValue?: number | null;
-  floatValue?: number | null;
-  innerModel?: InnerModel | null;
-  intArray?: number[] | null;
 }
 
 /** */
 export interface ResourcePatchResourceMergeAndPatch {
   description?: string | null;
-  map?: Record<string, InnerModel> | null;
-  array?: Array<InnerModel> | null;
+  map?: Record<string, InnerModelResourceMergeAndPatch> | null;
+  array?: Array<InnerModelResourceMergeAndPatch> | null;
   intValue?: number | null;
   floatValue?: number | null;
-  innerModel?: InnerModel | null;
+  innerModel?: InnerModelResourceMergeAndPatch | null;
   intArray?: number[] | null;
 }

@@ -46,6 +46,7 @@ export function generateModelFiles(
 
   const mergeModelDefinitions = buildMergeModelDefinitions(
     model,
+    objectsDefinitions,
     importedModels,
     schemaContext
   );

@@ -119,6 +119,7 @@ export function buildPolymorphicAliases(
 
 export function buildMergeModelDefinitions(
   model: RLCModel,
+  objectsDefinitions: InterfaceDeclarationStructure[],
   partialBodyTypeNames: Set<string>,
   schemaUsage: SchemaContext[]
 ) {
@@ -130,20 +131,21 @@ export function buildMergeModelDefinitions(
     const requestCount = requestParameter?.parameters?.length ?? 0;
     for (let i = 0; i < requestCount; i++) {
       const parameter = requestParameter.parameters[i];
-      const bodyInterface = buildMergeModel(model, parameter, partialBodyTypeNames);
+      const bodyInterface: InterfaceDeclarationStructure[] | undefined =
+        buildMergeModels(objectsDefinitions, parameter, partialBodyTypeNames);
       if (bodyInterface) {
-        mergeModelDefinitions.push(bodyInterface);
+        mergeModelDefinitions.push(...bodyInterface);
       }
     }
   }
   return mergeModelDefinitions;
 }
 
-function buildMergeModel(
-  model: RLCModel,
+function buildMergeModels(
+  objectsDefinitions: InterfaceDeclarationStructure[],
   parameters: ParameterMetadatas,
   partialBodyTypeNames: Set<string>
-): InterfaceDeclarationStructure | undefined {
+): InterfaceDeclarationStructure[] | undefined {
   const bodyParameters = parameters.body;
   if (
     !bodyParameters ||
@@ -161,33 +163,54 @@ function buildMergeModel(
   }
 
   const contentType = headerParameters[0].param.type;
-  const description = `${schema.description}`;
-  const typeName = `${schema.typeName}ResourceMergeAndPatch`;
   if (contentType.includes("application/merge-patch+json")) {
-    if (schema.properties) {
-      const bodySignature = getPropertySignatures(
-        schema.properties,
-        [SchemaContext.Input],
-        partialBodyTypeNames
-      );
-
-      bodySignature.map((p) => {
-        if (!p.hasQuestionToken) {
-          p.hasQuestionToken = true;
-        } else {
-          p.type += " | null";
-        }
-        return p;
-      });
-      return {
-        isExported: true,
-        kind: StructureKind.Interface,
-        name: typeName,
-        docs: [description],
-        properties: bodySignature
-      };
-    }
+    return buildMergeModel(objectsDefinitions, schema, partialBodyTypeNames);
   }
+}
+
+function buildMergeModel(
+  objectsDefinitions: InterfaceDeclarationStructure[],
+  schema: ObjectSchema,
+  partialBodyTypeNames: Set<string>
+): InterfaceDeclarationStructure[] | undefined {
+  if (schema.properties) {
+    const typeName = `${schema.typeName}ResourceMergeAndPatch`;
+    const description = `${schema.description}`;
+    const allMergedModels: InterfaceDeclarationStructure[] = [];
+    Object.entries(schema.properties)
+      .filter((p) => p[1].type === "object")
+      .forEach((p) => {
+        objectsDefinitions
+          .filter((o) => o.name === p[1].typeName)
+          .forEach((o) => {
+            allMergedModels.push(o);
+          });
+      });
+    const bodySignature = getPropertySignatures(
+      schema.properties,
+      [SchemaContext.Input],
+      partialBodyTypeNames
+    );
+
+    bodySignature.map((p) => {
+      if (!p.hasQuestionToken) {
+        p.hasQuestionToken = true;
+      } else {
+        p.type += " | null";
+      }
+      return p;
+    });
+    const mergedModel: InterfaceDeclarationStructure = {
+      isExported: true,
+      kind: StructureKind.Interface,
+      name: typeName,
+      docs: [description],
+      properties: bodySignature
+    };
+    allMergedModels.push(mergedModel);
+    return allMergedModels;
+  }
+  return undefined;
 }
 /**
  * Gets a base name for an object schema this is tipically used with suffixes when building interface or type names

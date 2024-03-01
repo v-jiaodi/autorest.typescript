@@ -278,6 +278,7 @@ export interface ObjectSchema extends Schema {
   discriminatorValue?: string;
   discriminator?: Schema;
   isPolyParent?: boolean;
+  hasMergePatch?: boolean;
   children?: {
     all?: ObjectSchema[];
     immediate?: ObjectSchema[];
