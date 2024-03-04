@@ -82,7 +82,7 @@ describe("ClientEncodedNameClient Rest Client", () => {
     }
   });
 
-  it.only("should get header response", async () => {
+  it("should get header response", async () => {
     try {
       const result = await client.path("/client/naming/header").get();
       assert.strictEqual(result.headers["default-name"], "true");
