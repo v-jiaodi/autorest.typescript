@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import ExtensibleClient from "./extensibleClient";
+import ProjectionClient from "./projectionClient";
 
-export * from "./extensibleClient";
+export * from "./projectionClient";
 export * from "./parameters";
 export * from "./responses";
 export * from "./clientDefinitions";
 export * from "./models";
-export * from "./outputModels";
 
-export default ExtensibleClient;
+export default ProjectionClient;
