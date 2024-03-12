@@ -4,19 +4,19 @@
 import { getClient, ClientOptions } from "@azure-rest/core-client";
 import { logger } from "../logger.js";
 import { TokenCredential } from "@azure/core-auth";
-import { ServiceNetworkingContext } from "./clientDefinitions.js";
+import { NetworkAnalyticsContext } from "./clientDefinitions.js";
 
 /**
- * Initialize a new instance of `ServiceNetworkingContext`
+ * Initialize a new instance of `NetworkAnalyticsContext`
  * @param credentials - uniquely identify client credential
  * @param options - the parameter for all optional parameters
  */
 export default function createClient(
   credentials: TokenCredential,
   options: ClientOptions = {},
-): ServiceNetworkingContext {
+): NetworkAnalyticsContext {
   const baseUrl = options.baseUrl ?? `https://management.azure.com`;
-  options.apiVersion = options.apiVersion ?? "2023-11-01";
+  options.apiVersion = options.apiVersion ?? "2023-11-15";
   const userAgentInfo = `azsdk-js-arm-networkanalytics-rest/1.0.0-beta.1`;
   const userAgentPrefix =
     options.userAgentOptions && options.userAgentOptions.userAgentPrefix
@@ -39,7 +39,7 @@ export default function createClient(
     baseUrl,
     credentials,
     options,
-  ) as ServiceNetworkingContext;
+  ) as NetworkAnalyticsContext;
 
   return client;
 }

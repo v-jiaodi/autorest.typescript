@@ -7,21 +7,20 @@ import {
   deserializeState,
   ResourceLocationConfig,
 } from "@azure/core-lro";
-import { ServiceNetworkingContext } from "./api/ServiceNetworkingContext.js";
-import { ServiceNetworkingClient } from "./ServiceNetworkingClient.js";
+import { NetworkAnalyticsContext } from "./api/NetworkAnalyticsContext.js";
+import { NetworkAnalyticsClient } from "./NetworkAnalyticsClient.js";
 import { getLongRunningPoller } from "./api/pollingHelpers.js";
 import {
-  _associationsInterfaceCreateOrUpdateDeserialize,
-  _associationsInterfaceDeleteOperationDeserialize,
-} from "./api/associationsInterface/index.js";
+  _dataTypesCreateDeserialize,
+  _dataTypesUpdateDeserialize,
+  _dataTypesDeleteOperationDeserialize,
+  _dataTypesDeleteDataDeserialize,
+} from "./api/dataTypes/index.js";
 import {
-  _frontendsInterfaceCreateOrUpdateDeserialize,
-  _frontendsInterfaceDeleteOperationDeserialize,
-} from "./api/frontendsInterface/index.js";
-import {
-  _trafficControllerInterfaceCreateOrUpdateDeserialize,
-  _trafficControllerInterfaceDeleteOperationDeserialize,
-} from "./api/trafficControllerInterface/index.js";
+  _dataProductsCreateDeserialize,
+  _dataProductsUpdateDeserialize,
+  _dataProductsDeleteOperationDeserialize,
+} from "./api/dataProducts/index.js";
 import {
   PathUncheckedResponse,
   OperationOptions,
@@ -48,7 +47,7 @@ export interface RestorePollerOptions<
  * needs to be constructed after the original one is not in scope.
  */
 export function restorePoller<TResponse extends PathUncheckedResponse, TResult>(
-  client: ServiceNetworkingContext | ServiceNetworkingClient,
+  client: NetworkAnalyticsContext | NetworkAnalyticsClient,
   serializedState: string,
   sourceOperation: (
     ...args: any[]
@@ -87,18 +86,20 @@ export function restorePoller<TResponse extends PathUncheckedResponse, TResult>(
 }
 
 const deserializeMap: Record<string, Function> = {
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
-    _associationsInterfaceCreateOrUpdateDeserialize,
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
-    _associationsInterfaceDeleteOperationDeserialize,
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
-    _frontendsInterfaceCreateOrUpdateDeserialize,
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
-    _frontendsInterfaceDeleteOperationDeserialize,
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
-    _trafficControllerInterfaceCreateOrUpdateDeserialize,
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
-    _trafficControllerInterfaceDeleteOperationDeserialize,
+  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
+    _dataTypesCreateDeserialize,
+  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
+    _dataTypesUpdateDeserialize,
+  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
+    _dataTypesDeleteOperationDeserialize,
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}/deleteData":
+    _dataTypesDeleteDataDeserialize,
+  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
+    _dataProductsCreateDeserialize,
+  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
+    _dataProductsUpdateDeserialize,
+  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
+    _dataProductsDeleteOperationDeserialize,
 };
 
 function getDeserializationHelper(

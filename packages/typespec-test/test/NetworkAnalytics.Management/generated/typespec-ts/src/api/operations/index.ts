@@ -6,9 +6,9 @@ import { PagedAsyncIterableIterator } from "../../models/pagingTypes.js";
 import { buildPagedAsyncIterator } from "../pagingHelpers.js";
 import {
   isUnexpected,
+  NetworkAnalyticsContext as Client,
   OperationsList200Response,
   OperationsListDefaultResponse,
-  ServiceNetworkingContext as Client,
 } from "../../rest/index.js";
 import {
   StreamableMethod,
@@ -22,7 +22,7 @@ export function _operationsListSend(
   options: OperationsListOptions = { requestOptions: {} },
 ): StreamableMethod<OperationsList200Response | OperationsListDefaultResponse> {
   return context
-    .path("/providers/Microsoft.ServiceNetworking/operations")
+    .path("/providers/Microsoft.NetworkAnalytics/operations")
     .get({ ...operationOptionsToRequestParameters(options) });
 }
 

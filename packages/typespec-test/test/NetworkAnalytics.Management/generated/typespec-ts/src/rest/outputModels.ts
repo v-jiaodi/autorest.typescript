@@ -3,35 +3,108 @@
 
 import { Paged } from "@azure/core-paging";
 
-/** Association Subresource of Traffic Controller */
-export interface AssociationOutput extends TrackedResourceBaseOutput {
+/** Details of a REST API operation, returned from the Resource Provider Operations API */
+export interface OperationOutput {
+  /** The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action" */
+  readonly name?: string;
+  /** Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. */
+  readonly isDataAction?: boolean;
+  /** Localized display information for this particular operation. */
+  display?: OperationDisplayOutput;
+  /**
+   * The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+   *
+   * Possible values: "user", "system", "user,system"
+   */
+  readonly origin?: string;
+  /**
+   * Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+   *
+   * Possible values: "Internal"
+   */
+  actionType?: string;
+}
+
+/** Localized display information for and operation. */
+export interface OperationDisplayOutput {
+  /** The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". */
+  provider?: string;
+  /** The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". */
+  resource?: string;
+  /** The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". */
+  operation?: string;
+  /** The short, localized friendly description of the operation; suitable for tool tips and detailed views. */
+  description?: string;
+}
+
+/** Common error response for all Azure Resource Manager APIs to return error details for failed operations. */
+export interface ErrorResponseOutput {
+  /** The error object. */
+  error?: ErrorDetailOutput;
+}
+
+/** The error detail. */
+export interface ErrorDetailOutput {
+  /** The error code. */
+  readonly code?: string;
+  /** The error message. */
+  readonly message?: string;
+  /** The error target. */
+  readonly target?: string;
+  /** The error details. */
+  readonly details?: Array<ErrorDetailOutput>;
+  /** The error additional info. */
+  readonly additionalInfo?: Array<ErrorAdditionalInfoOutput>;
+}
+
+/** The resource management error additional info. */
+export interface ErrorAdditionalInfoOutput {
+  /** The additional info type. */
+  readonly type?: string;
+  /** The additional info. */
+  readonly info?: Record<string, any>;
+}
+
+/** The data catalog resource. */
+export interface DataProductsCatalogOutput extends ProxyResourceBaseOutput {
   /** The resource-specific properties for this resource. */
-  properties?: AssociationPropertiesOutput;
+  properties?: DataProductsCatalogPropertiesOutput;
 }
 
-/** Association Properties. */
-export interface AssociationPropertiesOutput {
-  /** Association Type */
-  associationType: AssociationTypeOutput;
-  /** Association Subnet */
-  subnet?: AssociationSubnetOutput;
-  /** Provisioning State of Traffic Controller Association Resource */
+/** Details for data catalog properties. */
+export interface DataProductsCatalogPropertiesOutput {
+  /** The data catalog provisioning state. */
   readonly provisioningState?: ProvisioningStateOutput;
+  /** The data product publisher information. */
+  publishers: Array<PublisherInformationOutput>;
 }
 
-/** Association Subnet. */
-export interface AssociationSubnetOutput {
-  /** Association ID. */
-  id: string;
+/** Details for Publisher Information. */
+export interface PublisherInformationOutput {
+  /** Name of the publisher. */
+  publisherName: string;
+  /** Data product information. */
+  dataProducts: Array<DataProductInformationOutput>;
 }
 
-/** The resource model definition for an Azure Resource Manager tracked top level resource */
-export interface TrackedResourceBaseOutput extends ArmResourceOutput {
-  /** The geo-location where the resource lives */
-  location: string;
-  /** Resource tags. */
-  tags?: Record<string, string>;
+/** Data Product Information */
+export interface DataProductInformationOutput {
+  /** Name of data product. */
+  dataProductName: string;
+  /** Description about data product. */
+  description: string;
+  /** Version information of data product. */
+  dataProductVersions: Array<DataProductVersionOutput>;
 }
+
+/** Data Product Version. */
+export interface DataProductVersionOutput {
+  /** Version of data product */
+  version: string;
+}
+
+/** The base proxy resource. */
+export interface ProxyResourceBaseOutput extends ArmResourceOutput {}
 
 /** Common properties for all Azure Resource Manager resources. */
 export interface ArmResourceOutput extends ArmResourceBaseOutput {
@@ -70,8 +143,180 @@ export interface SystemDataOutput {
 /** Base class used for type definitions */
 export interface ArmResourceBaseOutput {}
 
-/** The base proxy resource. */
-export interface ProxyResourceBaseOutput extends ArmResourceOutput {}
+/** The resource model definition for an Azure Resource Manager tracked top level resource */
+export interface TrackedResourceBaseOutput extends ArmResourceOutput {
+  /** The geo-location where the resource lives */
+  location: string;
+  /** Resource tags. */
+  tags?: Record<string, string>;
+}
+
+/** The data product resource. */
+export interface DataProductOutput extends TrackedResourceBaseOutput {
+  /** The resource-specific properties for this resource. */
+  properties?: DataProductPropertiesOutput;
+  /** The managed service identities assigned to this resource. */
+  identity?: ManagedIdentityPropertiesOutput;
+}
+
+/** The data product properties. */
+export interface DataProductPropertiesOutput {
+  /** The resource GUID property of the data product resource. */
+  readonly resourceGuid?: string;
+  /** Latest provisioning state  of data product. */
+  readonly provisioningState?: ProvisioningStateOutput;
+  /** Data product publisher name. */
+  publisher: string;
+  /** Product name of data product. */
+  product: string;
+  /** Major version of data product. */
+  majorVersion: string;
+  /** List of name or email associated with data product resource deployment. */
+  owners?: string[];
+  /** Flag to enable or disable redundancy for data product. */
+  redundancy?: ControlStateOutput;
+  /** Purview account url for data product to connect to. */
+  purviewAccount?: string;
+  /** Purview collection url for data product to connect to. */
+  purviewCollection?: string;
+  /** Flag to enable or disable private link for data product resource. */
+  privateLinksEnabled?: ControlStateOutput;
+  /** Flag to enable or disable public access of data product resource. */
+  publicNetworkAccess?: ControlStateOutput;
+  /** Flag to enable customer managed key encryption for data product. */
+  customerManagedKeyEncryptionEnabled?: ControlStateOutput;
+  /** Customer managed encryption key details for data product. */
+  customerEncryptionKey?: EncryptionKeyDetailsOutput;
+  /** Network rule set for data product. */
+  networkacls?: DataProductNetworkAclsOutput;
+  /** Managed resource group configuration. */
+  managedResourceGroupConfiguration?: ManagedResourceGroupConfigurationOutput;
+  /** List of available minor versions of the data product resource. */
+  readonly availableMinorVersions?: string[];
+  /** Current configured minor version of the data product resource. */
+  currentMinorVersion?: string;
+  /** Documentation link for the data product based on definition file. */
+  readonly documentation?: string;
+  /** Resource links which exposed to the customer to query the data. */
+  readonly consumptionEndpoints?: ConsumptionEndpointsPropertiesOutput;
+  /** Key vault url. */
+  readonly keyVaultUrl?: string;
+}
+
+/** Encryption key details. */
+export interface EncryptionKeyDetailsOutput {
+  /** The Uri of the key vault. */
+  keyVaultUri: string;
+  /** The name of the key vault key. */
+  keyName: string;
+  /** The version of the key vault key. */
+  keyVersion: string;
+}
+
+/** Data Product Network rule set */
+export interface DataProductNetworkAclsOutput {
+  /** Virtual Network Rule */
+  virtualNetworkRule: Array<VirtualNetworkRuleOutput>;
+  /** IP rule with specific IP or IP range in CIDR format. */
+  ipRules: Array<IPRulesOutput>;
+  /** The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. */
+  allowedQueryIpRangeList: string[];
+  /** Default Action */
+  defaultAction: DefaultActionOutput;
+}
+
+/** Virtual Network Rule */
+export interface VirtualNetworkRuleOutput {
+  /** Resource ID of a subnet */
+  id: string;
+  /** The action of virtual network rule. */
+  action?: string;
+  /** Gets the state of virtual network rule. */
+  state?: string;
+}
+
+/** IP rule with specific IP or IP range in CIDR format. */
+export interface IPRulesOutput {
+  /** IP Rules Value */
+  value?: string;
+  /** The action of virtual network rule. */
+  action: string;
+}
+
+/** ManagedResourceGroup related properties */
+export interface ManagedResourceGroupConfigurationOutput {
+  /** Name of managed resource group */
+  name: string;
+  /** Managed Resource Group location */
+  location: string;
+}
+
+/** Details of Consumption Properties */
+export interface ConsumptionEndpointsPropertiesOutput {
+  /** Ingestion url to upload the data. */
+  readonly ingestionUrl?: string;
+  /** Resource Id of ingestion endpoint. */
+  readonly ingestionResourceId?: string;
+  /** Url to consume file type. */
+  readonly fileAccessUrl?: string;
+  /** Resource Id of file access endpoint. */
+  readonly fileAccessResourceId?: string;
+  /** Url to consume the processed data. */
+  readonly queryUrl?: string;
+  /** Resource Id of query endpoint. */
+  readonly queryResourceId?: string;
+}
+
+/** The properties of the managed service identities assigned to this resource. */
+export interface ManagedIdentityPropertiesOutput {
+  /** The Active Directory tenant id of the principal. */
+  readonly tenantId?: string;
+  /** The active directory identifier of this principal. */
+  readonly principalId?: string;
+  /**
+   * The type of managed identity assigned to this resource.
+   *
+   * Possible values: "None", "SystemAssigned", "UserAssigned", "SystemAssigned, UserAssigned"
+   */
+  type: string;
+  /** The identities assigned to this resource by the user. */
+  userAssignedIdentities?: Record<string, UserAssignedIdentityOutput>;
+}
+
+/** A managed identity assigned by the user. */
+export interface UserAssignedIdentityOutput {
+  /** The active directory client identifier for this principal. */
+  clientId?: string;
+  /** The active directory identifier for this principal. */
+  principalId?: string;
+}
+
+/** The base extension resource. */
+export interface ExtensionResourceBaseOutput extends ArmResourceOutput {}
+
+/** The data type resource. */
+export interface DataTypeOutput extends ProxyResourceBaseOutput {
+  /** The resource-specific properties for this resource. */
+  properties?: DataTypePropertiesOutput;
+}
+
+/** The data type properties */
+export interface DataTypePropertiesOutput {
+  /** Latest provisioning state  of data product. */
+  readonly provisioningState?: ProvisioningStateOutput;
+  /** State of data type. */
+  state?: DataTypeStateOutput;
+  /** Reason for the state of data type. */
+  readonly stateReason?: string;
+  /** Field for storage output retention in days. */
+  storageOutputRetention?: number;
+  /** Field for database cache retention in days. */
+  databaseCacheRetention?: number;
+  /** Field for database data retention in days. */
+  databaseRetention?: number;
+  /** Url for data visualization. */
+  readonly visualizationUrl?: string;
+}
 
 /** The private endpoint connection resource */
 export interface PrivateEndpointConnectionOutput
@@ -131,126 +376,68 @@ export interface PrivateLinkResourcePropertiesOutput {
   requiredZoneNames?: string[];
 }
 
-/** The base extension resource. */
-export interface ExtensionResourceBaseOutput extends ArmResourceOutput {}
-
-/** Concrete tracked resource types can be created by aliasing this type using a specific property type. */
-export interface TrafficControllerOutput extends TrackedResourceBaseOutput {
-  /** The resource-specific properties for this resource. */
-  properties?: TrafficControllerPropertiesOutput;
+/** Details of storage container account sas token . */
+export interface ContainerSasTokenOutput {
+  /** Field to specify storage container sas token. */
+  storageContainerSasToken: string;
 }
 
-/** Traffic Controller Properties. */
-export interface TrafficControllerPropertiesOutput {
-  /** Configuration Endpoints. */
-  readonly configurationEndpoints?: string[];
-  /** Frontends References List */
-  readonly frontends?: Array<ResourceIdOutput>;
-  /** Associations References List */
-  readonly associations?: Array<ResourceIdOutput>;
-  /** The status of the last operation. */
-  readonly provisioningState?: ProvisioningStateOutput;
+/** Details of storage account sas token . */
+export interface AccountSasTokenOutput {
+  /** Field to specify storage account sas token. */
+  storageAccountSasToken: string;
 }
 
-/** Resource ID definition used by parent to reference child resources. */
-export interface ResourceIdOutput {
-  /** Resource ID of child resource. */
-  id: string;
+/** The details for role assignment response. */
+export interface RoleAssignmentDetailOutput {
+  /** Role Id of the Built-In Role */
+  roleId: string;
+  /** Object ID of the AAD principal or security-group. */
+  principalId: string;
+  /** User name. */
+  userName: string;
+  /** Data Type Scope at which the role assignment is created. */
+  dataTypeScope: string[];
+  /** Type of the principal Id: User, Group or ServicePrincipal */
+  principalType: string;
+  /** Data Product role to be assigned to a user. */
+  role: DataProductUserRoleOutput;
+  /** Id of role assignment request */
+  roleAssignmentId: string;
 }
 
-/** Frontend Subresource of Traffic Controller. */
-export interface FrontendOutput extends TrackedResourceBaseOutput {
-  /** The resource-specific properties for this resource. */
-  properties?: FrontendPropertiesOutput;
+/** list role assignments. */
+export interface ListRoleAssignmentsOutput {
+  /** Count of role assignments. */
+  count: number;
+  /** list of role assignments */
+  roleAssignmentResponse: Array<RoleAssignmentDetailOutput>;
 }
 
-/** Frontend Properties. */
-export interface FrontendPropertiesOutput {
-  /** The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. */
-  readonly fqdn?: string;
-  /** Provisioning State of Traffic Controller Frontend Resource */
-  readonly provisioningState?: ProvisioningStateOutput;
-}
-
-/** Common error response for all Azure Resource Manager APIs to return error details for failed operations. */
-export interface ErrorResponseOutput {
-  /** The error object. */
-  error?: ErrorDetailOutput;
-}
-
-/** The error detail. */
-export interface ErrorDetailOutput {
-  /** The error code. */
-  readonly code?: string;
-  /** The error message. */
-  readonly message?: string;
-  /** The error target. */
-  readonly target?: string;
-  /** The error details. */
-  readonly details?: Array<ErrorDetailOutput>;
-  /** The error additional info. */
-  readonly additionalInfo?: Array<ErrorAdditionalInfoOutput>;
-}
-
-/** The resource management error additional info. */
-export interface ErrorAdditionalInfoOutput {
-  /** The additional info type. */
-  readonly type?: string;
-  /** The additional info. */
-  readonly info?: Record<string, any>;
-}
-
-/** Details of a REST API operation, returned from the Resource Provider Operations API */
-export interface OperationOutput {
-  /** The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action" */
-  readonly name?: string;
-  /** Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. */
-  readonly isDataAction?: boolean;
-  /** Localized display information for this particular operation. */
-  display?: OperationDisplayOutput;
-  /**
-   * The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
-   *
-   * Possible values: "user", "system", "user,system"
-   */
-  readonly origin?: string;
-  /**
-   * Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
-   *
-   * Possible values: "Internal"
-   */
-  actionType?: string;
-}
-
-/** Localized display information for and operation. */
-export interface OperationDisplayOutput {
-  /** The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". */
-  provider?: string;
-  /** The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". */
-  resource?: string;
-  /** The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". */
-  operation?: string;
-  /** The short, localized friendly description of the operation; suitable for tool tips and detailed views. */
-  description?: string;
-}
-
-/** Alias for AssociationTypeOutput */
-export type AssociationTypeOutput = string | "subnets";
+/** A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. */
+export type PagedOperationOutput = Paged<OperationOutput>;
 /** Alias for ProvisioningStateOutput */
 export type ProvisioningStateOutput =
   | string
+  | "Succeeded"
+  | "Failed"
+  | "Canceled"
   | "Provisioning"
   | "Updating"
   | "Deleting"
-  | "Accepted"
-  | "Succeeded"
-  | "Failed"
-  | "Canceled";
-/** The response of a Association list operation. */
-export type AssociationListResultOutput = Paged<AssociationOutput>;
-/** The response of a Frontend list operation. */
-export type FrontendListResultOutput = Paged<FrontendOutput>;
-/** The response of a TrafficController list operation. */
-export type TrafficControllerListResultOutput = Paged<TrafficControllerOutput>;
-/** A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. */
-export type PagedOperationOutput = Paged<OperationOutput>;
+  | "Accepted";
+/** Alias for ControlStateOutput */
+export type ControlStateOutput = string | "Enabled" | "Disabled";
+/** Alias for DefaultActionOutput */
+export type DefaultActionOutput = string | "Allow" | "Deny";
+/** Alias for DataTypeStateOutput */
+export type DataTypeStateOutput = string | "Stopped" | "Running";
+/** The response of a DataProductsCatalog list operation. */
+export type DataProductsCatalogListResultOutput =
+  Paged<DataProductsCatalogOutput>;
+/** The response of a DataType list operation. */
+export type DataTypeListResultOutput = Paged<DataTypeOutput>;
+/** Alias for DataProductUserRoleOutput */
+export type DataProductUserRoleOutput = string | "Reader" | "SensitiveReader";
+/** The response of a DataProduct list operation. */
+export type DataProductListResultOutput = Paged<DataProductOutput>;

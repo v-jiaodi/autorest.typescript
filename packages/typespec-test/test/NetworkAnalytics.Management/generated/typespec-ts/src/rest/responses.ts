@@ -4,349 +4,19 @@
 import { RawHttpHeaders } from "@azure/core-rest-pipeline";
 import { HttpResponse } from "@azure-rest/core-client";
 import {
-  AssociationOutput,
-  ErrorResponseOutput,
-  AssociationListResultOutput,
-  FrontendOutput,
-  FrontendListResultOutput,
-  TrafficControllerOutput,
-  TrafficControllerListResultOutput,
   PagedOperationOutput,
+  ErrorResponseOutput,
+  DataProductsCatalogOutput,
+  DataProductsCatalogListResultOutput,
+  DataTypeOutput,
+  ContainerSasTokenOutput,
+  DataTypeListResultOutput,
+  DataProductOutput,
+  AccountSasTokenOutput,
+  RoleAssignmentDetailOutput,
+  ListRoleAssignmentsOutput,
+  DataProductListResultOutput,
 } from "./outputModels.js";
-
-/** Azure operation completed successfully. */
-export interface AssociationsInterfaceGet200Response extends HttpResponse {
-  status: "200";
-  body: AssociationOutput;
-}
-
-export interface AssociationsInterfaceGetDefaultResponse extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource 'Association' update operation succeeded */
-export interface AssociationsInterfaceCreateOrUpdate200Response
-  extends HttpResponse {
-  status: "200";
-  body: AssociationOutput;
-}
-
-export interface AssociationsInterfaceCreateOrUpdate201Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-}
-
-/** Resource 'Association' create operation succeeded */
-export interface AssociationsInterfaceCreateOrUpdate201Response
-  extends HttpResponse {
-  status: "201";
-  body: AssociationOutput;
-  headers: RawHttpHeaders & AssociationsInterfaceCreateOrUpdate201Headers;
-}
-
-export interface AssociationsInterfaceCreateOrUpdateDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running createOrUpdate operation */
-export interface AssociationsInterfaceCreateOrUpdateLogicalResponse
-  extends HttpResponse {
-  status: "200";
-  body: AssociationOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface AssociationsInterfaceUpdate200Response extends HttpResponse {
-  status: "200";
-  body: AssociationOutput;
-}
-
-export interface AssociationsInterfaceUpdateDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource deleted successfully. */
-export interface AssociationsInterfaceDeleteOperation200Response
-  extends HttpResponse {
-  status: "200";
-}
-
-export interface AssociationsInterfaceDeleteOperation202Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-  /** The Location header contains the URL where the status of the long running operation can be checked. */
-  location?: string;
-}
-
-/** Resource deletion accepted. */
-export interface AssociationsInterfaceDeleteOperation202Response
-  extends HttpResponse {
-  status: "202";
-  headers: RawHttpHeaders & AssociationsInterfaceDeleteOperation202Headers;
-}
-
-/** Resource does not exist. */
-export interface AssociationsInterfaceDeleteOperation204Response
-  extends HttpResponse {
-  status: "204";
-}
-
-export interface AssociationsInterfaceDeleteOperationDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running delete operation */
-export interface AssociationsInterfaceDeleteLogicalResponse
-  extends HttpResponse {
-  status: "200";
-}
-
-/** Azure operation completed successfully. */
-export interface AssociationsInterfaceListByTrafficController200Response
-  extends HttpResponse {
-  status: "200";
-  body: AssociationListResultOutput;
-}
-
-export interface AssociationsInterfaceListByTrafficControllerDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface FrontendsInterfaceGet200Response extends HttpResponse {
-  status: "200";
-  body: FrontendOutput;
-}
-
-export interface FrontendsInterfaceGetDefaultResponse extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource 'Frontend' update operation succeeded */
-export interface FrontendsInterfaceCreateOrUpdate200Response
-  extends HttpResponse {
-  status: "200";
-  body: FrontendOutput;
-}
-
-export interface FrontendsInterfaceCreateOrUpdate201Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-}
-
-/** Resource 'Frontend' create operation succeeded */
-export interface FrontendsInterfaceCreateOrUpdate201Response
-  extends HttpResponse {
-  status: "201";
-  body: FrontendOutput;
-  headers: RawHttpHeaders & FrontendsInterfaceCreateOrUpdate201Headers;
-}
-
-export interface FrontendsInterfaceCreateOrUpdateDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running createOrUpdate operation */
-export interface FrontendsInterfaceCreateOrUpdateLogicalResponse
-  extends HttpResponse {
-  status: "200";
-  body: FrontendOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface FrontendsInterfaceUpdate200Response extends HttpResponse {
-  status: "200";
-  body: FrontendOutput;
-}
-
-export interface FrontendsInterfaceUpdateDefaultResponse extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource deleted successfully. */
-export interface FrontendsInterfaceDeleteOperation200Response
-  extends HttpResponse {
-  status: "200";
-}
-
-export interface FrontendsInterfaceDeleteOperation202Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-  /** The Location header contains the URL where the status of the long running operation can be checked. */
-  location?: string;
-}
-
-/** Resource deletion accepted. */
-export interface FrontendsInterfaceDeleteOperation202Response
-  extends HttpResponse {
-  status: "202";
-  headers: RawHttpHeaders & FrontendsInterfaceDeleteOperation202Headers;
-}
-
-/** Resource does not exist. */
-export interface FrontendsInterfaceDeleteOperation204Response
-  extends HttpResponse {
-  status: "204";
-}
-
-export interface FrontendsInterfaceDeleteOperationDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running delete operation */
-export interface FrontendsInterfaceDeleteLogicalResponse extends HttpResponse {
-  status: "200";
-}
-
-/** Azure operation completed successfully. */
-export interface FrontendsInterfaceListByTrafficController200Response
-  extends HttpResponse {
-  status: "200";
-  body: FrontendListResultOutput;
-}
-
-export interface FrontendsInterfaceListByTrafficControllerDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface TrafficControllerInterfaceGet200Response extends HttpResponse {
-  status: "200";
-  body: TrafficControllerOutput;
-}
-
-export interface TrafficControllerInterfaceGetDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource 'TrafficController' update operation succeeded */
-export interface TrafficControllerInterfaceCreateOrUpdate200Response
-  extends HttpResponse {
-  status: "200";
-  body: TrafficControllerOutput;
-}
-
-export interface TrafficControllerInterfaceCreateOrUpdate201Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-}
-
-/** Resource 'TrafficController' create operation succeeded */
-export interface TrafficControllerInterfaceCreateOrUpdate201Response
-  extends HttpResponse {
-  status: "201";
-  body: TrafficControllerOutput;
-  headers: RawHttpHeaders & TrafficControllerInterfaceCreateOrUpdate201Headers;
-}
-
-export interface TrafficControllerInterfaceCreateOrUpdateDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running createOrUpdate operation */
-export interface TrafficControllerInterfaceCreateOrUpdateLogicalResponse
-  extends HttpResponse {
-  status: "200";
-  body: TrafficControllerOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface TrafficControllerInterfaceUpdate200Response
-  extends HttpResponse {
-  status: "200";
-  body: TrafficControllerOutput;
-}
-
-export interface TrafficControllerInterfaceUpdateDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Resource deleted successfully. */
-export interface TrafficControllerInterfaceDeleteOperation200Response
-  extends HttpResponse {
-  status: "200";
-}
-
-export interface TrafficControllerInterfaceDeleteOperation202Headers {
-  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
-  "retry-after"?: number;
-  /** The Location header contains the URL where the status of the long running operation can be checked. */
-  location?: string;
-}
-
-/** Resource deletion accepted. */
-export interface TrafficControllerInterfaceDeleteOperation202Response
-  extends HttpResponse {
-  status: "202";
-  headers: RawHttpHeaders & TrafficControllerInterfaceDeleteOperation202Headers;
-}
-
-/** Resource does not exist. */
-export interface TrafficControllerInterfaceDeleteOperation204Response
-  extends HttpResponse {
-  status: "204";
-}
-
-export interface TrafficControllerInterfaceDeleteOperationDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** The final response for long-running delete operation */
-export interface TrafficControllerInterfaceDeleteLogicalResponse
-  extends HttpResponse {
-  status: "200";
-}
-
-/** Azure operation completed successfully. */
-export interface TrafficControllerInterfaceListByResourceGroup200Response
-  extends HttpResponse {
-  status: "200";
-  body: TrafficControllerListResultOutput;
-}
-
-export interface TrafficControllerInterfaceListByResourceGroupDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
-
-/** Azure operation completed successfully. */
-export interface TrafficControllerInterfaceListBySubscription200Response
-  extends HttpResponse {
-  status: "200";
-  body: TrafficControllerListResultOutput;
-}
-
-export interface TrafficControllerInterfaceListBySubscriptionDefaultResponse
-  extends HttpResponse {
-  status: string;
-  body: ErrorResponseOutput;
-}
 
 /** Azure operation completed successfully. */
 export interface OperationsList200Response extends HttpResponse {
@@ -355,6 +25,377 @@ export interface OperationsList200Response extends HttpResponse {
 }
 
 export interface OperationsListDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsCatalogsGet200Response extends HttpResponse {
+  status: "200";
+  body: DataProductsCatalogOutput;
+}
+
+export interface DataProductsCatalogsGetDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsCatalogsListByResourceGroup200Response
+  extends HttpResponse {
+  status: "200";
+  body: DataProductsCatalogListResultOutput;
+}
+
+export interface DataProductsCatalogsListByResourceGroupDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsCatalogsListBySubscription200Response
+  extends HttpResponse {
+  status: "200";
+  body: DataProductsCatalogListResultOutput;
+}
+
+export interface DataProductsCatalogsListBySubscriptionDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Resource 'DataType' update operation succeeded */
+export interface DataTypesCreate200Response extends HttpResponse {
+  status: "200";
+  body: DataTypeOutput;
+}
+
+export interface DataTypesCreate201Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+}
+
+/** Resource 'DataType' create operation succeeded */
+export interface DataTypesCreate201Response extends HttpResponse {
+  status: "201";
+  body: DataTypeOutput;
+  headers: RawHttpHeaders & DataTypesCreate201Headers;
+}
+
+export interface DataTypesCreateDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running create operation */
+export interface DataTypesCreateLogicalResponse extends HttpResponse {
+  status: "200";
+  body: DataTypeOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataTypesGet200Response extends HttpResponse {
+  status: "200";
+  body: DataTypeOutput;
+}
+
+export interface DataTypesGetDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataTypesUpdate200Response extends HttpResponse {
+  status: "200";
+  body: DataTypeOutput;
+}
+
+export interface DataTypesUpdate202Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+  /** The Location header contains the URL where the status of the long running operation can be checked. */
+  location?: string;
+}
+
+/** Resource update request accepted. */
+export interface DataTypesUpdate202Response extends HttpResponse {
+  status: "202";
+  headers: RawHttpHeaders & DataTypesUpdate202Headers;
+}
+
+export interface DataTypesUpdateDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running update operation */
+export interface DataTypesUpdateLogicalResponse extends HttpResponse {
+  status: "200";
+  body: DataTypeOutput;
+}
+
+export interface DataTypesDeleteOperation202Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+  /** The Location header contains the URL where the status of the long running operation can be checked. */
+  location?: string;
+}
+
+/** Resource deletion accepted. */
+export interface DataTypesDeleteOperation202Response extends HttpResponse {
+  status: "202";
+  headers: RawHttpHeaders & DataTypesDeleteOperation202Headers;
+}
+
+/** Resource does not exist. */
+export interface DataTypesDeleteOperation204Response extends HttpResponse {
+  status: "204";
+}
+
+export interface DataTypesDeleteOperationDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running delete operation */
+export interface DataTypesDeleteLogicalResponse extends HttpResponse {
+  status: "200";
+}
+
+export interface DataTypesDeleteData202Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+  /** The Location header contains the URL where the status of the long running operation can be checked. */
+  location?: string;
+}
+
+/** Resource operation accepted. */
+export interface DataTypesDeleteData202Response extends HttpResponse {
+  status: "202";
+  headers: RawHttpHeaders & DataTypesDeleteData202Headers;
+}
+
+/** Action completed successfully. */
+export interface DataTypesDeleteData204Response extends HttpResponse {
+  status: "204";
+}
+
+export interface DataTypesDeleteDataDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running deleteData operation */
+export interface DataTypesDeleteDataLogicalResponse extends HttpResponse {
+  status: "200";
+}
+
+/** Azure operation completed successfully. */
+export interface DataTypesGenerateStorageContainerSasToken200Response
+  extends HttpResponse {
+  status: "200";
+  body: ContainerSasTokenOutput;
+}
+
+export interface DataTypesGenerateStorageContainerSasTokenDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataTypesListByDataProduct200Response extends HttpResponse {
+  status: "200";
+  body: DataTypeListResultOutput;
+}
+
+export interface DataTypesListByDataProductDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Resource 'DataProduct' update operation succeeded */
+export interface DataProductsCreate200Response extends HttpResponse {
+  status: "200";
+  body: DataProductOutput;
+}
+
+export interface DataProductsCreate201Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+}
+
+/** Resource 'DataProduct' create operation succeeded */
+export interface DataProductsCreate201Response extends HttpResponse {
+  status: "201";
+  body: DataProductOutput;
+  headers: RawHttpHeaders & DataProductsCreate201Headers;
+}
+
+export interface DataProductsCreateDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running create operation */
+export interface DataProductsCreateLogicalResponse extends HttpResponse {
+  status: "200";
+  body: DataProductOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsGet200Response extends HttpResponse {
+  status: "200";
+  body: DataProductOutput;
+}
+
+export interface DataProductsGetDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsUpdate200Response extends HttpResponse {
+  status: "200";
+  body: DataProductOutput;
+}
+
+export interface DataProductsUpdate202Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+  /** The Location header contains the URL where the status of the long running operation can be checked. */
+  location?: string;
+}
+
+/** Resource update request accepted. */
+export interface DataProductsUpdate202Response extends HttpResponse {
+  status: "202";
+  headers: RawHttpHeaders & DataProductsUpdate202Headers;
+}
+
+export interface DataProductsUpdateDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running update operation */
+export interface DataProductsUpdateLogicalResponse extends HttpResponse {
+  status: "200";
+  body: DataProductOutput;
+}
+
+export interface DataProductsDeleteOperation202Headers {
+  /** The Retry-After header can indicate how long the client should wait before polling the operation status. */
+  "retry-after"?: number;
+  /** The Location header contains the URL where the status of the long running operation can be checked. */
+  location?: string;
+}
+
+/** Resource deletion accepted. */
+export interface DataProductsDeleteOperation202Response extends HttpResponse {
+  status: "202";
+  headers: RawHttpHeaders & DataProductsDeleteOperation202Headers;
+}
+
+/** Resource does not exist. */
+export interface DataProductsDeleteOperation204Response extends HttpResponse {
+  status: "204";
+}
+
+export interface DataProductsDeleteOperationDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** The final response for long-running delete operation */
+export interface DataProductsDeleteLogicalResponse extends HttpResponse {
+  status: "200";
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsGenerateStorageAccountSasToken200Response
+  extends HttpResponse {
+  status: "200";
+  body: AccountSasTokenOutput;
+}
+
+export interface DataProductsGenerateStorageAccountSasTokenDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Action completed successfully. */
+export interface DataProductsRotateKey204Response extends HttpResponse {
+  status: "204";
+}
+
+export interface DataProductsRotateKeyDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsAddUserRole200Response extends HttpResponse {
+  status: "200";
+  body: RoleAssignmentDetailOutput;
+}
+
+export interface DataProductsAddUserRoleDefaultResponse extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Action completed successfully. */
+export interface DataProductsRemoveUserRole204Response extends HttpResponse {
+  status: "204";
+}
+
+export interface DataProductsRemoveUserRoleDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsListRolesAssignments200Response
+  extends HttpResponse {
+  status: "200";
+  body: ListRoleAssignmentsOutput;
+}
+
+export interface DataProductsListRolesAssignmentsDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsListByResourceGroup200Response
+  extends HttpResponse {
+  status: "200";
+  body: DataProductListResultOutput;
+}
+
+export interface DataProductsListByResourceGroupDefaultResponse
+  extends HttpResponse {
+  status: string;
+  body: ErrorResponseOutput;
+}
+
+/** Azure operation completed successfully. */
+export interface DataProductsListBySubscription200Response
+  extends HttpResponse {
+  status: "200";
+  body: DataProductListResultOutput;
+}
+
+export interface DataProductsListBySubscriptionDefaultResponse
+  extends HttpResponse {
   status: string;
   body: ErrorResponseOutput;
 }

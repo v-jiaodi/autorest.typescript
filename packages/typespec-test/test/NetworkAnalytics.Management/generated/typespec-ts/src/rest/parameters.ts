@@ -3,74 +3,115 @@
 
 import { RequestParameters } from "@azure-rest/core-client";
 import {
-  Association,
-  AssociationUpdate,
-  Frontend,
-  FrontendUpdate,
-  TrafficController,
-  TrafficControllerUpdate,
+  DataType,
+  DataTypeUpdate,
+  ContainerSaS,
+  DataProduct,
+  DataProductUpdate,
+  AccountSas,
+  KeyVaultInfo,
+  RoleAssignmentCommonProperties,
+  RoleAssignmentDetail,
 } from "./models.js";
 
-export type AssociationsInterfaceGetParameters = RequestParameters;
-
-export interface AssociationsInterfaceCreateOrUpdateBodyParam {
-  /** Resource create parameters. */
-  body: Association;
-}
-
-export type AssociationsInterfaceCreateOrUpdateParameters =
-  AssociationsInterfaceCreateOrUpdateBodyParam & RequestParameters;
-
-export interface AssociationsInterfaceUpdateBodyParam {
-  /** The resource properties to be updated. */
-  body: AssociationUpdate;
-}
-
-export type AssociationsInterfaceUpdateParameters =
-  AssociationsInterfaceUpdateBodyParam & RequestParameters;
-export type AssociationsInterfaceDeleteParameters = RequestParameters;
-export type AssociationsInterfaceListByTrafficControllerParameters =
-  RequestParameters;
-export type FrontendsInterfaceGetParameters = RequestParameters;
-
-export interface FrontendsInterfaceCreateOrUpdateBodyParam {
-  /** Resource create parameters. */
-  body: Frontend;
-}
-
-export type FrontendsInterfaceCreateOrUpdateParameters =
-  FrontendsInterfaceCreateOrUpdateBodyParam & RequestParameters;
-
-export interface FrontendsInterfaceUpdateBodyParam {
-  /** The resource properties to be updated. */
-  body: FrontendUpdate;
-}
-
-export type FrontendsInterfaceUpdateParameters =
-  FrontendsInterfaceUpdateBodyParam & RequestParameters;
-export type FrontendsInterfaceDeleteParameters = RequestParameters;
-export type FrontendsInterfaceListByTrafficControllerParameters =
-  RequestParameters;
-export type TrafficControllerInterfaceGetParameters = RequestParameters;
-
-export interface TrafficControllerInterfaceCreateOrUpdateBodyParam {
-  /** Resource create parameters. */
-  body: TrafficController;
-}
-
-export type TrafficControllerInterfaceCreateOrUpdateParameters =
-  TrafficControllerInterfaceCreateOrUpdateBodyParam & RequestParameters;
-
-export interface TrafficControllerInterfaceUpdateBodyParam {
-  /** The resource properties to be updated. */
-  body: TrafficControllerUpdate;
-}
-
-export type TrafficControllerInterfaceUpdateParameters =
-  TrafficControllerInterfaceUpdateBodyParam & RequestParameters;
-export type TrafficControllerInterfaceDeleteParameters = RequestParameters;
-export type TrafficControllerInterfaceListByResourceGroupParameters =
-  RequestParameters;
-export type TrafficControllerInterfaceListBySubscriptionParameters =
-  RequestParameters;
 export type OperationsListParameters = RequestParameters;
+export type DataProductsCatalogsGetParameters = RequestParameters;
+export type DataProductsCatalogsListByResourceGroupParameters =
+  RequestParameters;
+export type DataProductsCatalogsListBySubscriptionParameters =
+  RequestParameters;
+
+export interface DataTypesCreateBodyParam {
+  /** Resource create parameters. */
+  body: DataType;
+}
+
+export type DataTypesCreateParameters = DataTypesCreateBodyParam &
+  RequestParameters;
+export type DataTypesGetParameters = RequestParameters;
+
+export interface DataTypesUpdateBodyParam {
+  /** The resource properties to be updated. */
+  body: DataTypeUpdate;
+}
+
+export type DataTypesUpdateParameters = DataTypesUpdateBodyParam &
+  RequestParameters;
+export type DataTypesDeleteParameters = RequestParameters;
+
+export interface DataTypesDeleteDataBodyParam {
+  /** The content of the action request */
+  body: Record<string, unknown>;
+}
+
+export type DataTypesDeleteDataParameters = DataTypesDeleteDataBodyParam &
+  RequestParameters;
+
+export interface DataTypesGenerateStorageContainerSasTokenBodyParam {
+  /** The content of the action request */
+  body: ContainerSaS;
+}
+
+export type DataTypesGenerateStorageContainerSasTokenParameters =
+  DataTypesGenerateStorageContainerSasTokenBodyParam & RequestParameters;
+export type DataTypesListByDataProductParameters = RequestParameters;
+
+export interface DataProductsCreateBodyParam {
+  /** Resource create parameters. */
+  body: DataProduct;
+}
+
+export type DataProductsCreateParameters = DataProductsCreateBodyParam &
+  RequestParameters;
+export type DataProductsGetParameters = RequestParameters;
+
+export interface DataProductsUpdateBodyParam {
+  /** The resource properties to be updated. */
+  body: DataProductUpdate;
+}
+
+export type DataProductsUpdateParameters = DataProductsUpdateBodyParam &
+  RequestParameters;
+export type DataProductsDeleteParameters = RequestParameters;
+
+export interface DataProductsGenerateStorageAccountSasTokenBodyParam {
+  /** The content of the action request */
+  body: AccountSas;
+}
+
+export type DataProductsGenerateStorageAccountSasTokenParameters =
+  DataProductsGenerateStorageAccountSasTokenBodyParam & RequestParameters;
+
+export interface DataProductsRotateKeyBodyParam {
+  /** The content of the action request */
+  body: KeyVaultInfo;
+}
+
+export type DataProductsRotateKeyParameters = DataProductsRotateKeyBodyParam &
+  RequestParameters;
+
+export interface DataProductsAddUserRoleBodyParam {
+  /** The content of the action request */
+  body: RoleAssignmentCommonProperties;
+}
+
+export type DataProductsAddUserRoleParameters =
+  DataProductsAddUserRoleBodyParam & RequestParameters;
+
+export interface DataProductsRemoveUserRoleBodyParam {
+  /** The content of the action request */
+  body: RoleAssignmentDetail;
+}
+
+export type DataProductsRemoveUserRoleParameters =
+  DataProductsRemoveUserRoleBodyParam & RequestParameters;
+
+export interface DataProductsListRolesAssignmentsBodyParam {
+  /** The content of the action request */
+  body: Record<string, unknown>;
+}
+
+export type DataProductsListRolesAssignmentsParameters =
+  DataProductsListRolesAssignmentsBodyParam & RequestParameters;
+export type DataProductsListByResourceGroupParameters = RequestParameters;
+export type DataProductsListBySubscriptionParameters = RequestParameters;

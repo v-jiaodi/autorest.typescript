@@ -2,30 +2,35 @@
 // Licensed under the MIT license.
 
 export {
-  createServiceNetworking,
-  ServiceNetworkingClientOptions,
-  ServiceNetworkingContext,
-} from "./ServiceNetworkingContext.js";
+  createNetworkAnalytics,
+  NetworkAnalyticsClientOptions,
+  NetworkAnalyticsContext,
+} from "./NetworkAnalyticsContext.js";
 export {
-  associationsInterfaceGet,
-  associationsInterfaceCreateOrUpdate,
-  associationsInterfaceUpdate,
-  associationsInterfaceDeleteOperation,
-  associationsInterfaceListByTrafficController,
-} from "./associationsInterface/index.js";
+  dataProductsCreate,
+  dataProductsGet,
+  dataProductsUpdate,
+  dataProductsDeleteOperation,
+  dataProductsGenerateStorageAccountSasToken,
+  dataProductsRotateKey,
+  dataProductsAddUserRole,
+  dataProductsRemoveUserRole,
+  dataProductsListRolesAssignments,
+  dataProductsListByResourceGroup,
+  dataProductsListBySubscription,
+} from "./dataProducts/index.js";
 export {
-  frontendsInterfaceGet,
-  frontendsInterfaceCreateOrUpdate,
-  frontendsInterfaceUpdate,
-  frontendsInterfaceDeleteOperation,
-  frontendsInterfaceListByTrafficController,
-} from "./frontendsInterface/index.js";
+  dataProductsCatalogsGet,
+  dataProductsCatalogsListByResourceGroup,
+  dataProductsCatalogsListBySubscription,
+} from "./dataProductsCatalogs/index.js";
+export {
+  dataTypesCreate,
+  dataTypesGet,
+  dataTypesUpdate,
+  dataTypesDeleteOperation,
+  dataTypesDeleteData,
+  dataTypesGenerateStorageContainerSasToken,
+  dataTypesListByDataProduct,
+} from "./dataTypes/index.js";
 export { operationsList } from "./operations/index.js";
-export {
-  trafficControllerInterfaceGet,
-  trafficControllerInterfaceCreateOrUpdate,
-  trafficControllerInterfaceUpdate,
-  trafficControllerInterfaceDeleteOperation,
-  trafficControllerInterfaceListByResourceGroup,
-  trafficControllerInterfaceListBySubscription,
-} from "./trafficControllerInterface/index.js";

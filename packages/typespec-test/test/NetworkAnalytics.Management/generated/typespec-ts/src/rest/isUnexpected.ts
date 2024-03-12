@@ -2,260 +2,315 @@
 // Licensed under the MIT license.
 
 import {
-  AssociationsInterfaceGet200Response,
-  AssociationsInterfaceGetDefaultResponse,
-  AssociationsInterfaceCreateOrUpdate200Response,
-  AssociationsInterfaceCreateOrUpdate201Response,
-  AssociationsInterfaceCreateOrUpdateLogicalResponse,
-  AssociationsInterfaceCreateOrUpdateDefaultResponse,
-  AssociationsInterfaceUpdate200Response,
-  AssociationsInterfaceUpdateDefaultResponse,
-  AssociationsInterfaceDeleteOperation200Response,
-  AssociationsInterfaceDeleteOperation202Response,
-  AssociationsInterfaceDeleteOperation204Response,
-  AssociationsInterfaceDeleteLogicalResponse,
-  AssociationsInterfaceDeleteOperationDefaultResponse,
-  AssociationsInterfaceListByTrafficController200Response,
-  AssociationsInterfaceListByTrafficControllerDefaultResponse,
-  FrontendsInterfaceGet200Response,
-  FrontendsInterfaceGetDefaultResponse,
-  FrontendsInterfaceCreateOrUpdate200Response,
-  FrontendsInterfaceCreateOrUpdate201Response,
-  FrontendsInterfaceCreateOrUpdateLogicalResponse,
-  FrontendsInterfaceCreateOrUpdateDefaultResponse,
-  FrontendsInterfaceUpdate200Response,
-  FrontendsInterfaceUpdateDefaultResponse,
-  FrontendsInterfaceDeleteOperation200Response,
-  FrontendsInterfaceDeleteOperation202Response,
-  FrontendsInterfaceDeleteOperation204Response,
-  FrontendsInterfaceDeleteLogicalResponse,
-  FrontendsInterfaceDeleteOperationDefaultResponse,
-  FrontendsInterfaceListByTrafficController200Response,
-  FrontendsInterfaceListByTrafficControllerDefaultResponse,
-  TrafficControllerInterfaceGet200Response,
-  TrafficControllerInterfaceGetDefaultResponse,
-  TrafficControllerInterfaceCreateOrUpdate200Response,
-  TrafficControllerInterfaceCreateOrUpdate201Response,
-  TrafficControllerInterfaceCreateOrUpdateLogicalResponse,
-  TrafficControllerInterfaceCreateOrUpdateDefaultResponse,
-  TrafficControllerInterfaceUpdate200Response,
-  TrafficControllerInterfaceUpdateDefaultResponse,
-  TrafficControllerInterfaceDeleteOperation200Response,
-  TrafficControllerInterfaceDeleteOperation202Response,
-  TrafficControllerInterfaceDeleteOperation204Response,
-  TrafficControllerInterfaceDeleteLogicalResponse,
-  TrafficControllerInterfaceDeleteOperationDefaultResponse,
-  TrafficControllerInterfaceListByResourceGroup200Response,
-  TrafficControllerInterfaceListByResourceGroupDefaultResponse,
-  TrafficControllerInterfaceListBySubscription200Response,
-  TrafficControllerInterfaceListBySubscriptionDefaultResponse,
   OperationsList200Response,
   OperationsListDefaultResponse,
+  DataProductsCatalogsGet200Response,
+  DataProductsCatalogsGetDefaultResponse,
+  DataProductsCatalogsListByResourceGroup200Response,
+  DataProductsCatalogsListByResourceGroupDefaultResponse,
+  DataProductsCatalogsListBySubscription200Response,
+  DataProductsCatalogsListBySubscriptionDefaultResponse,
+  DataTypesCreate200Response,
+  DataTypesCreate201Response,
+  DataTypesCreateLogicalResponse,
+  DataTypesCreateDefaultResponse,
+  DataTypesGet200Response,
+  DataTypesGetDefaultResponse,
+  DataTypesUpdate200Response,
+  DataTypesUpdate202Response,
+  DataTypesUpdateLogicalResponse,
+  DataTypesUpdateDefaultResponse,
+  DataTypesDeleteOperation202Response,
+  DataTypesDeleteOperation204Response,
+  DataTypesDeleteLogicalResponse,
+  DataTypesDeleteOperationDefaultResponse,
+  DataTypesDeleteData202Response,
+  DataTypesDeleteData204Response,
+  DataTypesDeleteDataLogicalResponse,
+  DataTypesDeleteDataDefaultResponse,
+  DataTypesGenerateStorageContainerSasToken200Response,
+  DataTypesGenerateStorageContainerSasTokenDefaultResponse,
+  DataTypesListByDataProduct200Response,
+  DataTypesListByDataProductDefaultResponse,
+  DataProductsCreate200Response,
+  DataProductsCreate201Response,
+  DataProductsCreateLogicalResponse,
+  DataProductsCreateDefaultResponse,
+  DataProductsGet200Response,
+  DataProductsGetDefaultResponse,
+  DataProductsUpdate200Response,
+  DataProductsUpdate202Response,
+  DataProductsUpdateLogicalResponse,
+  DataProductsUpdateDefaultResponse,
+  DataProductsDeleteOperation202Response,
+  DataProductsDeleteOperation204Response,
+  DataProductsDeleteLogicalResponse,
+  DataProductsDeleteOperationDefaultResponse,
+  DataProductsGenerateStorageAccountSasToken200Response,
+  DataProductsGenerateStorageAccountSasTokenDefaultResponse,
+  DataProductsRotateKey204Response,
+  DataProductsRotateKeyDefaultResponse,
+  DataProductsAddUserRole200Response,
+  DataProductsAddUserRoleDefaultResponse,
+  DataProductsRemoveUserRole204Response,
+  DataProductsRemoveUserRoleDefaultResponse,
+  DataProductsListRolesAssignments200Response,
+  DataProductsListRolesAssignmentsDefaultResponse,
+  DataProductsListByResourceGroup200Response,
+  DataProductsListByResourceGroupDefaultResponse,
+  DataProductsListBySubscription200Response,
+  DataProductsListBySubscriptionDefaultResponse,
 } from "./responses.js";
 
 const responseMap: Record<string, string[]> = {
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
+  "GET /providers/Microsoft.NetworkAnalytics/operations": ["200"],
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProductsCatalogs/default":
     ["200"],
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProductsCatalogs":
+    ["200"],
+  "GET /subscriptions/{subscriptionId}/providers/Microsoft.NetworkAnalytics/dataProductsCatalogs":
+    ["200"],
+  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
     ["200", "201"],
-  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
     ["200"],
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}":
+  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
+    ["200", "202"],
+  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}":
+    ["202", "204"],
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}/deleteData":
+    ["202", "204"],
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}/deleteData":
     ["200", "202", "204"],
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations":
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}/generateStorageContainerSasToken":
     ["200"],
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes":
     ["200"],
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
+  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
     ["200", "201"],
-  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
     ["200"],
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}":
-    ["200", "202", "204"],
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends":
+  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
+    ["200", "202"],
+  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}":
+    ["202", "204"],
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/generateStorageAccountSasToken":
     ["200"],
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/rotateKey":
+    ["204"],
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/addUserRole":
     ["200"],
-  "PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
-    ["200", "201"],
-  "PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/removeUserRole":
+    ["204"],
+  "POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/listRolesAssignments":
     ["200"],
-  "DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}":
-    ["200", "202", "204"],
-  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers":
+  "GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts":
     ["200"],
-  "GET /subscriptions/{subscriptionId}/providers/Microsoft.ServiceNetworking/trafficControllers":
+  "GET /subscriptions/{subscriptionId}/providers/Microsoft.NetworkAnalytics/dataProducts":
     ["200"],
-  "GET /providers/Microsoft.ServiceNetworking/operations": ["200"],
 };
 
-export function isUnexpected(
-  response:
-    | AssociationsInterfaceGet200Response
-    | AssociationsInterfaceGetDefaultResponse,
-): response is AssociationsInterfaceGetDefaultResponse;
-export function isUnexpected(
-  response:
-    | AssociationsInterfaceCreateOrUpdate200Response
-    | AssociationsInterfaceCreateOrUpdate201Response
-    | AssociationsInterfaceCreateOrUpdateLogicalResponse
-    | AssociationsInterfaceCreateOrUpdateDefaultResponse,
-): response is AssociationsInterfaceCreateOrUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | AssociationsInterfaceUpdate200Response
-    | AssociationsInterfaceUpdateDefaultResponse,
-): response is AssociationsInterfaceUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | AssociationsInterfaceDeleteOperation200Response
-    | AssociationsInterfaceDeleteOperation202Response
-    | AssociationsInterfaceDeleteOperation204Response
-    | AssociationsInterfaceDeleteLogicalResponse
-    | AssociationsInterfaceDeleteOperationDefaultResponse,
-): response is AssociationsInterfaceDeleteOperationDefaultResponse;
-export function isUnexpected(
-  response:
-    | AssociationsInterfaceListByTrafficController200Response
-    | AssociationsInterfaceListByTrafficControllerDefaultResponse,
-): response is AssociationsInterfaceListByTrafficControllerDefaultResponse;
-export function isUnexpected(
-  response:
-    | FrontendsInterfaceGet200Response
-    | FrontendsInterfaceGetDefaultResponse,
-): response is FrontendsInterfaceGetDefaultResponse;
-export function isUnexpected(
-  response:
-    | FrontendsInterfaceCreateOrUpdate200Response
-    | FrontendsInterfaceCreateOrUpdate201Response
-    | FrontendsInterfaceCreateOrUpdateLogicalResponse
-    | FrontendsInterfaceCreateOrUpdateDefaultResponse,
-): response is FrontendsInterfaceCreateOrUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | FrontendsInterfaceUpdate200Response
-    | FrontendsInterfaceUpdateDefaultResponse,
-): response is FrontendsInterfaceUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | FrontendsInterfaceDeleteOperation200Response
-    | FrontendsInterfaceDeleteOperation202Response
-    | FrontendsInterfaceDeleteOperation204Response
-    | FrontendsInterfaceDeleteLogicalResponse
-    | FrontendsInterfaceDeleteOperationDefaultResponse,
-): response is FrontendsInterfaceDeleteOperationDefaultResponse;
-export function isUnexpected(
-  response:
-    | FrontendsInterfaceListByTrafficController200Response
-    | FrontendsInterfaceListByTrafficControllerDefaultResponse,
-): response is FrontendsInterfaceListByTrafficControllerDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceGet200Response
-    | TrafficControllerInterfaceGetDefaultResponse,
-): response is TrafficControllerInterfaceGetDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceCreateOrUpdate200Response
-    | TrafficControllerInterfaceCreateOrUpdate201Response
-    | TrafficControllerInterfaceCreateOrUpdateLogicalResponse
-    | TrafficControllerInterfaceCreateOrUpdateDefaultResponse,
-): response is TrafficControllerInterfaceCreateOrUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceUpdate200Response
-    | TrafficControllerInterfaceUpdateDefaultResponse,
-): response is TrafficControllerInterfaceUpdateDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceDeleteOperation200Response
-    | TrafficControllerInterfaceDeleteOperation202Response
-    | TrafficControllerInterfaceDeleteOperation204Response
-    | TrafficControllerInterfaceDeleteLogicalResponse
-    | TrafficControllerInterfaceDeleteOperationDefaultResponse,
-): response is TrafficControllerInterfaceDeleteOperationDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceListByResourceGroup200Response
-    | TrafficControllerInterfaceListByResourceGroupDefaultResponse,
-): response is TrafficControllerInterfaceListByResourceGroupDefaultResponse;
-export function isUnexpected(
-  response:
-    | TrafficControllerInterfaceListBySubscription200Response
-    | TrafficControllerInterfaceListBySubscriptionDefaultResponse,
-): response is TrafficControllerInterfaceListBySubscriptionDefaultResponse;
 export function isUnexpected(
   response: OperationsList200Response | OperationsListDefaultResponse,
 ): response is OperationsListDefaultResponse;
 export function isUnexpected(
   response:
-    | AssociationsInterfaceGet200Response
-    | AssociationsInterfaceGetDefaultResponse
-    | AssociationsInterfaceCreateOrUpdate200Response
-    | AssociationsInterfaceCreateOrUpdate201Response
-    | AssociationsInterfaceCreateOrUpdateLogicalResponse
-    | AssociationsInterfaceCreateOrUpdateDefaultResponse
-    | AssociationsInterfaceUpdate200Response
-    | AssociationsInterfaceUpdateDefaultResponse
-    | AssociationsInterfaceDeleteOperation200Response
-    | AssociationsInterfaceDeleteOperation202Response
-    | AssociationsInterfaceDeleteOperation204Response
-    | AssociationsInterfaceDeleteLogicalResponse
-    | AssociationsInterfaceDeleteOperationDefaultResponse
-    | AssociationsInterfaceListByTrafficController200Response
-    | AssociationsInterfaceListByTrafficControllerDefaultResponse
-    | FrontendsInterfaceGet200Response
-    | FrontendsInterfaceGetDefaultResponse
-    | FrontendsInterfaceCreateOrUpdate200Response
-    | FrontendsInterfaceCreateOrUpdate201Response
-    | FrontendsInterfaceCreateOrUpdateLogicalResponse
-    | FrontendsInterfaceCreateOrUpdateDefaultResponse
-    | FrontendsInterfaceUpdate200Response
-    | FrontendsInterfaceUpdateDefaultResponse
-    | FrontendsInterfaceDeleteOperation200Response
-    | FrontendsInterfaceDeleteOperation202Response
-    | FrontendsInterfaceDeleteOperation204Response
-    | FrontendsInterfaceDeleteLogicalResponse
-    | FrontendsInterfaceDeleteOperationDefaultResponse
-    | FrontendsInterfaceListByTrafficController200Response
-    | FrontendsInterfaceListByTrafficControllerDefaultResponse
-    | TrafficControllerInterfaceGet200Response
-    | TrafficControllerInterfaceGetDefaultResponse
-    | TrafficControllerInterfaceCreateOrUpdate200Response
-    | TrafficControllerInterfaceCreateOrUpdate201Response
-    | TrafficControllerInterfaceCreateOrUpdateLogicalResponse
-    | TrafficControllerInterfaceCreateOrUpdateDefaultResponse
-    | TrafficControllerInterfaceUpdate200Response
-    | TrafficControllerInterfaceUpdateDefaultResponse
-    | TrafficControllerInterfaceDeleteOperation200Response
-    | TrafficControllerInterfaceDeleteOperation202Response
-    | TrafficControllerInterfaceDeleteOperation204Response
-    | TrafficControllerInterfaceDeleteLogicalResponse
-    | TrafficControllerInterfaceDeleteOperationDefaultResponse
-    | TrafficControllerInterfaceListByResourceGroup200Response
-    | TrafficControllerInterfaceListByResourceGroupDefaultResponse
-    | TrafficControllerInterfaceListBySubscription200Response
-    | TrafficControllerInterfaceListBySubscriptionDefaultResponse
+    | DataProductsCatalogsGet200Response
+    | DataProductsCatalogsGetDefaultResponse,
+): response is DataProductsCatalogsGetDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsCatalogsListByResourceGroup200Response
+    | DataProductsCatalogsListByResourceGroupDefaultResponse,
+): response is DataProductsCatalogsListByResourceGroupDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsCatalogsListBySubscription200Response
+    | DataProductsCatalogsListBySubscriptionDefaultResponse,
+): response is DataProductsCatalogsListBySubscriptionDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesCreate200Response
+    | DataTypesCreate201Response
+    | DataTypesCreateLogicalResponse
+    | DataTypesCreateDefaultResponse,
+): response is DataTypesCreateDefaultResponse;
+export function isUnexpected(
+  response: DataTypesGet200Response | DataTypesGetDefaultResponse,
+): response is DataTypesGetDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesUpdate200Response
+    | DataTypesUpdate202Response
+    | DataTypesUpdateLogicalResponse
+    | DataTypesUpdateDefaultResponse,
+): response is DataTypesUpdateDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesDeleteOperation202Response
+    | DataTypesDeleteOperation204Response
+    | DataTypesDeleteLogicalResponse
+    | DataTypesDeleteOperationDefaultResponse,
+): response is DataTypesDeleteOperationDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesDeleteData202Response
+    | DataTypesDeleteData204Response
+    | DataTypesDeleteDataLogicalResponse
+    | DataTypesDeleteDataDefaultResponse,
+): response is DataTypesDeleteDataDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesGenerateStorageContainerSasToken200Response
+    | DataTypesGenerateStorageContainerSasTokenDefaultResponse,
+): response is DataTypesGenerateStorageContainerSasTokenDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataTypesListByDataProduct200Response
+    | DataTypesListByDataProductDefaultResponse,
+): response is DataTypesListByDataProductDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsCreate200Response
+    | DataProductsCreate201Response
+    | DataProductsCreateLogicalResponse
+    | DataProductsCreateDefaultResponse,
+): response is DataProductsCreateDefaultResponse;
+export function isUnexpected(
+  response: DataProductsGet200Response | DataProductsGetDefaultResponse,
+): response is DataProductsGetDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsUpdate200Response
+    | DataProductsUpdate202Response
+    | DataProductsUpdateLogicalResponse
+    | DataProductsUpdateDefaultResponse,
+): response is DataProductsUpdateDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsDeleteOperation202Response
+    | DataProductsDeleteOperation204Response
+    | DataProductsDeleteLogicalResponse
+    | DataProductsDeleteOperationDefaultResponse,
+): response is DataProductsDeleteOperationDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsGenerateStorageAccountSasToken200Response
+    | DataProductsGenerateStorageAccountSasTokenDefaultResponse,
+): response is DataProductsGenerateStorageAccountSasTokenDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsRotateKey204Response
+    | DataProductsRotateKeyDefaultResponse,
+): response is DataProductsRotateKeyDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsAddUserRole200Response
+    | DataProductsAddUserRoleDefaultResponse,
+): response is DataProductsAddUserRoleDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsRemoveUserRole204Response
+    | DataProductsRemoveUserRoleDefaultResponse,
+): response is DataProductsRemoveUserRoleDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsListRolesAssignments200Response
+    | DataProductsListRolesAssignmentsDefaultResponse,
+): response is DataProductsListRolesAssignmentsDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsListByResourceGroup200Response
+    | DataProductsListByResourceGroupDefaultResponse,
+): response is DataProductsListByResourceGroupDefaultResponse;
+export function isUnexpected(
+  response:
+    | DataProductsListBySubscription200Response
+    | DataProductsListBySubscriptionDefaultResponse,
+): response is DataProductsListBySubscriptionDefaultResponse;
+export function isUnexpected(
+  response:
     | OperationsList200Response
-    | OperationsListDefaultResponse,
+    | OperationsListDefaultResponse
+    | DataProductsCatalogsGet200Response
+    | DataProductsCatalogsGetDefaultResponse
+    | DataProductsCatalogsListByResourceGroup200Response
+    | DataProductsCatalogsListByResourceGroupDefaultResponse
+    | DataProductsCatalogsListBySubscription200Response
+    | DataProductsCatalogsListBySubscriptionDefaultResponse
+    | DataTypesCreate200Response
+    | DataTypesCreate201Response
+    | DataTypesCreateLogicalResponse
+    | DataTypesCreateDefaultResponse
+    | DataTypesGet200Response
+    | DataTypesGetDefaultResponse
+    | DataTypesUpdate200Response
+    | DataTypesUpdate202Response
+    | DataTypesUpdateLogicalResponse
+    | DataTypesUpdateDefaultResponse
+    | DataTypesDeleteOperation202Response
+    | DataTypesDeleteOperation204Response
+    | DataTypesDeleteLogicalResponse
+    | DataTypesDeleteOperationDefaultResponse
+    | DataTypesDeleteData202Response
+    | DataTypesDeleteData204Response
+    | DataTypesDeleteDataLogicalResponse
+    | DataTypesDeleteDataDefaultResponse
+    | DataTypesGenerateStorageContainerSasToken200Response
+    | DataTypesGenerateStorageContainerSasTokenDefaultResponse
+    | DataTypesListByDataProduct200Response
+    | DataTypesListByDataProductDefaultResponse
+    | DataProductsCreate200Response
+    | DataProductsCreate201Response
+    | DataProductsCreateLogicalResponse
+    | DataProductsCreateDefaultResponse
+    | DataProductsGet200Response
+    | DataProductsGetDefaultResponse
+    | DataProductsUpdate200Response
+    | DataProductsUpdate202Response
+    | DataProductsUpdateLogicalResponse
+    | DataProductsUpdateDefaultResponse
+    | DataProductsDeleteOperation202Response
+    | DataProductsDeleteOperation204Response
+    | DataProductsDeleteLogicalResponse
+    | DataProductsDeleteOperationDefaultResponse
+    | DataProductsGenerateStorageAccountSasToken200Response
+    | DataProductsGenerateStorageAccountSasTokenDefaultResponse
+    | DataProductsRotateKey204Response
+    | DataProductsRotateKeyDefaultResponse
+    | DataProductsAddUserRole200Response
+    | DataProductsAddUserRoleDefaultResponse
+    | DataProductsRemoveUserRole204Response
+    | DataProductsRemoveUserRoleDefaultResponse
+    | DataProductsListRolesAssignments200Response
+    | DataProductsListRolesAssignmentsDefaultResponse
+    | DataProductsListByResourceGroup200Response
+    | DataProductsListByResourceGroupDefaultResponse
+    | DataProductsListBySubscription200Response
+    | DataProductsListBySubscriptionDefaultResponse,
 ): response is
-  | AssociationsInterfaceGetDefaultResponse
-  | AssociationsInterfaceCreateOrUpdateDefaultResponse
-  | AssociationsInterfaceUpdateDefaultResponse
-  | AssociationsInterfaceDeleteOperationDefaultResponse
-  | AssociationsInterfaceListByTrafficControllerDefaultResponse
-  | FrontendsInterfaceGetDefaultResponse
-  | FrontendsInterfaceCreateOrUpdateDefaultResponse
-  | FrontendsInterfaceUpdateDefaultResponse
-  | FrontendsInterfaceDeleteOperationDefaultResponse
-  | FrontendsInterfaceListByTrafficControllerDefaultResponse
-  | TrafficControllerInterfaceGetDefaultResponse
-  | TrafficControllerInterfaceCreateOrUpdateDefaultResponse
-  | TrafficControllerInterfaceUpdateDefaultResponse
-  | TrafficControllerInterfaceDeleteOperationDefaultResponse
-  | TrafficControllerInterfaceListByResourceGroupDefaultResponse
-  | TrafficControllerInterfaceListBySubscriptionDefaultResponse
-  | OperationsListDefaultResponse {
+  | OperationsListDefaultResponse
+  | DataProductsCatalogsGetDefaultResponse
+  | DataProductsCatalogsListByResourceGroupDefaultResponse
+  | DataProductsCatalogsListBySubscriptionDefaultResponse
+  | DataTypesCreateDefaultResponse
+  | DataTypesGetDefaultResponse
+  | DataTypesUpdateDefaultResponse
+  | DataTypesDeleteOperationDefaultResponse
+  | DataTypesDeleteDataDefaultResponse
+  | DataTypesGenerateStorageContainerSasTokenDefaultResponse
+  | DataTypesListByDataProductDefaultResponse
+  | DataProductsCreateDefaultResponse
+  | DataProductsGetDefaultResponse
+  | DataProductsUpdateDefaultResponse
+  | DataProductsDeleteOperationDefaultResponse
+  | DataProductsGenerateStorageAccountSasTokenDefaultResponse
+  | DataProductsRotateKeyDefaultResponse
+  | DataProductsAddUserRoleDefaultResponse
+  | DataProductsRemoveUserRoleDefaultResponse
+  | DataProductsListRolesAssignmentsDefaultResponse
+  | DataProductsListByResourceGroupDefaultResponse
+  | DataProductsListBySubscriptionDefaultResponse {
   const lroOriginal = response.headers["x-ms-original-url"];
   const url = new URL(lroOriginal ?? response.request.url);
   const method = response.request.method;
