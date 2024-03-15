@@ -62,7 +62,7 @@ export function _devicesGetSend(
   productName: string,
   deviceGroupName: string,
   deviceName: string,
-  options: DevicesGetOptions = { requestOptions: {} },
+  options: DevicesGetOptions = { requestOptions: {} }
 ): StreamableMethod<DevicesGet200Response | DevicesGetDefaultResponse> {
   return context
     .path(
@@ -72,13 +72,13 @@ export function _devicesGetSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .get({ ...operationOptionsToRequestParameters(options) });
 }
 
 export async function _devicesGetDeserialize(
-  result: DevicesGet200Response | DevicesGetDefaultResponse,
+  result: DevicesGet200Response | DevicesGetDefaultResponse
 ): Promise<Device> {
   if (isUnexpected(result)) {
     throw createRestError(result);
@@ -134,7 +134,7 @@ export async function devicesGet(
   productName: string,
   deviceGroupName: string,
   deviceName: string,
-  options: DevicesGetOptions = { requestOptions: {} },
+  options: DevicesGetOptions = { requestOptions: {} }
 ): Promise<Device> {
   const result = await _devicesGetSend(
     context,
@@ -144,7 +144,7 @@ export async function devicesGet(
     productName,
     deviceGroupName,
     deviceName,
-    options,
+    options
   );
   return _devicesGetDeserialize(result);
 }
@@ -158,7 +158,7 @@ export function _devicesCreateOrUpdateSend(
   deviceGroupName: string,
   deviceName: string,
   resource: Device,
-  options: DevicesCreateOrUpdateOptions = { requestOptions: {} },
+  options: DevicesCreateOrUpdateOptions = { requestOptions: {} }
 ): StreamableMethod<
   | DevicesCreateOrUpdate200Response
   | DevicesCreateOrUpdate201Response
@@ -173,7 +173,7 @@ export function _devicesCreateOrUpdateSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .put({
       ...operationOptionsToRequestParameters(options),
@@ -190,7 +190,7 @@ export async function _devicesCreateOrUpdateDeserialize(
     | DevicesCreateOrUpdate200Response
     | DevicesCreateOrUpdate201Response
     | DevicesCreateOrUpdateDefaultResponse
-    | DevicesCreateOrUpdateLogicalResponse,
+    | DevicesCreateOrUpdateLogicalResponse
 ): Promise<Device> {
   if (isUnexpected(result)) {
     throw createRestError(result);
@@ -248,7 +248,7 @@ export function devicesCreateOrUpdate(
   deviceGroupName: string,
   deviceName: string,
   resource: Device,
-  options: DevicesCreateOrUpdateOptions = { requestOptions: {} },
+  options: DevicesCreateOrUpdateOptions = { requestOptions: {} }
 ): PollerLike<OperationState<Device>, Device> {
   return getLongRunningPoller(context, _devicesCreateOrUpdateDeserialize, {
     updateIntervalInMs: options?.updateIntervalInMs,
@@ -263,7 +263,7 @@ export function devicesCreateOrUpdate(
         deviceGroupName,
         deviceName,
         resource,
-        options,
+        options
       ),
   }) as PollerLike<OperationState<Device>, Device>;
 }
@@ -275,7 +275,7 @@ export function _devicesListByDeviceGroupSend(
   catalogName: string,
   productName: string,
   deviceGroupName: string,
-  options: DevicesListByDeviceGroupOptions = { requestOptions: {} },
+  options: DevicesListByDeviceGroupOptions = { requestOptions: {} }
 ): StreamableMethod<
   DevicesListByDeviceGroup200Response | DevicesListByDeviceGroupDefaultResponse
 > {
@@ -286,7 +286,7 @@ export function _devicesListByDeviceGroupSend(
       resourceGroupName,
       catalogName,
       productName,
-      deviceGroupName,
+      deviceGroupName
     )
     .get({ ...operationOptionsToRequestParameters(options) });
 }
@@ -294,7 +294,7 @@ export function _devicesListByDeviceGroupSend(
 export async function _devicesListByDeviceGroupDeserialize(
   result:
     | DevicesListByDeviceGroup200Response
-    | DevicesListByDeviceGroupDefaultResponse,
+    | DevicesListByDeviceGroupDefaultResponse
 ): Promise<DeviceListResult> {
   if (isUnexpected(result)) {
     throw createRestError(result);
@@ -350,7 +350,7 @@ export function devicesListByDeviceGroup(
   catalogName: string,
   productName: string,
   deviceGroupName: string,
-  options: DevicesListByDeviceGroupOptions = { requestOptions: {} },
+  options: DevicesListByDeviceGroupOptions = { requestOptions: {} }
 ): PagedAsyncIterableIterator<Device> {
   return buildPagedAsyncIterator(
     context,
@@ -362,10 +362,10 @@ export function devicesListByDeviceGroup(
         catalogName,
         productName,
         deviceGroupName,
-        options,
+        options
       ),
     _devicesListByDeviceGroupDeserialize,
-    { itemName: "value", nextLinkName: "nextLink" },
+    { itemName: "value", nextLinkName: "nextLink" }
   );
 }
 
@@ -377,7 +377,7 @@ export function _devicesDeleteOperationSend(
   productName: string,
   deviceGroupName: string,
   deviceName: string,
-  options: DevicesDeleteOperationOptions = { requestOptions: {} },
+  options: DevicesDeleteOperationOptions = { requestOptions: {} }
 ): StreamableMethod<
   | DevicesDeleteOperation200Response
   | DevicesDeleteOperation202Response
@@ -393,7 +393,7 @@ export function _devicesDeleteOperationSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .delete({ ...operationOptionsToRequestParameters(options) });
 }
@@ -404,7 +404,7 @@ export async function _devicesDeleteOperationDeserialize(
     | DevicesDeleteOperation202Response
     | DevicesDeleteOperation204Response
     | DevicesDeleteOperationDefaultResponse
-    | DevicesDeleteLogicalResponse,
+    | DevicesDeleteLogicalResponse
 ): Promise<void> {
   if (isUnexpected(result)) {
     throw createRestError(result);
@@ -423,7 +423,7 @@ export function devicesDeleteOperation(
   productName: string,
   deviceGroupName: string,
   deviceName: string,
-  options: DevicesDeleteOperationOptions = { requestOptions: {} },
+  options: DevicesDeleteOperationOptions = { requestOptions: {} }
 ): PollerLike<OperationState<void>, void> {
   return getLongRunningPoller(context, _devicesDeleteOperationDeserialize, {
     updateIntervalInMs: options?.updateIntervalInMs,
@@ -437,7 +437,7 @@ export function devicesDeleteOperation(
         productName,
         deviceGroupName,
         deviceName,
-        options,
+        options
       ),
   }) as PollerLike<OperationState<void>, void>;
 }
@@ -451,7 +451,7 @@ export function _devicesUpdateSend(
   deviceGroupName: string,
   deviceName: string,
   properties: DeviceUpdate,
-  options: DevicesUpdateOptions = { requestOptions: {} },
+  options: DevicesUpdateOptions = { requestOptions: {} }
 ): StreamableMethod<
   | DevicesUpdate200Response
   | DevicesUpdate202Response
@@ -465,7 +465,7 @@ export function _devicesUpdateSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .patch({
       ...operationOptionsToRequestParameters(options),
@@ -481,12 +481,13 @@ export async function _devicesUpdateDeserialize(
   result:
     | DevicesUpdate200Response
     | DevicesUpdate202Response
-    | DevicesUpdateDefaultResponse,
+    | DevicesUpdateDefaultResponse
 ): Promise<Device> {
   if (isUnexpected(result)) {
     throw createRestError(result);
   }
 
+  result = result as DevicesUpdate200Response;
   return {
     id: result.body["id"],
     type: result.body["type"],
@@ -538,7 +539,7 @@ export async function devicesUpdate(
   deviceGroupName: string,
   deviceName: string,
   properties: DeviceUpdate,
-  options: DevicesUpdateOptions = { requestOptions: {} },
+  options: DevicesUpdateOptions = { requestOptions: {} }
 ): Promise<Device> {
   const result = await _devicesUpdateSend(
     context,
@@ -549,7 +550,7 @@ export async function devicesUpdate(
     deviceGroupName,
     deviceName,
     properties,
-    options,
+    options
   );
   return _devicesUpdateDeserialize(result);
 }
@@ -565,7 +566,7 @@ export function _devicesDeprecatedGenerateCapabilityImageSend(
   generateDeviceCapabilityRequest: GenerateCapabilityImageRequest,
   options: DevicesDeprecatedGenerateCapabilityImageOptions = {
     requestOptions: {},
-  },
+  }
 ): StreamableMethod<
   | DevicesDeprecatedGenerateCapabilityImage200Response
   | DevicesDeprecatedGenerateCapabilityImage202Response
@@ -579,7 +580,7 @@ export function _devicesDeprecatedGenerateCapabilityImageSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .post({
       ...operationOptionsToRequestParameters(options),
@@ -595,12 +596,13 @@ export async function _devicesDeprecatedGenerateCapabilityImageDeserialize(
   result:
     | DevicesDeprecatedGenerateCapabilityImage200Response
     | DevicesDeprecatedGenerateCapabilityImage202Response
-    | DevicesDeprecatedGenerateCapabilityImageDefaultResponse,
+    | DevicesDeprecatedGenerateCapabilityImageDefaultResponse
 ): Promise<SignedCapabilityImageResponse> {
   if (isUnexpected(result)) {
     throw createRestError(result);
   }
 
+  result = result as DevicesDeprecatedGenerateCapabilityImage200Response;
   return {
     image: result.body["image"],
   };
@@ -618,7 +620,7 @@ export async function devicesDeprecatedGenerateCapabilityImage(
   generateDeviceCapabilityRequest: GenerateCapabilityImageRequest,
   options: DevicesDeprecatedGenerateCapabilityImageOptions = {
     requestOptions: {},
-  },
+  }
 ): Promise<SignedCapabilityImageResponse> {
   const result = await _devicesDeprecatedGenerateCapabilityImageSend(
     context,
@@ -629,7 +631,7 @@ export async function devicesDeprecatedGenerateCapabilityImage(
     deviceGroupName,
     deviceName,
     generateDeviceCapabilityRequest,
-    options,
+    options
   );
   return _devicesDeprecatedGenerateCapabilityImageDeserialize(result);
 }
@@ -643,7 +645,7 @@ export function _devicesGenerateCapabilityImageSend(
   deviceGroupName: string,
   deviceName: string,
   generateDeviceCapabilityRequest: GenerateCapabilityImageRequest,
-  options: DevicesGenerateCapabilityImageOptions = { requestOptions: {} },
+  options: DevicesGenerateCapabilityImageOptions = { requestOptions: {} }
 ): StreamableMethod<
   | DevicesGenerateCapabilityImage200Response
   | DevicesGenerateCapabilityImage202Response
@@ -658,7 +660,7 @@ export function _devicesGenerateCapabilityImageSend(
       catalogName,
       productName,
       deviceGroupName,
-      deviceName,
+      deviceName
     )
     .post({
       ...operationOptionsToRequestParameters(options),
@@ -676,7 +678,7 @@ export async function _devicesGenerateCapabilityImageDeserialize(
     | DevicesGenerateCapabilityImage200Response
     | DevicesGenerateCapabilityImage202Response
     | DevicesGenerateCapabilityImageDefaultResponse
-    | DevicesGenerateCapabilityImageLogicalResponse,
+    | DevicesGenerateCapabilityImageLogicalResponse
 ): Promise<void> {
   if (isUnexpected(result)) {
     throw createRestError(result);
@@ -696,7 +698,7 @@ export function devicesGenerateCapabilityImage(
   deviceGroupName: string,
   deviceName: string,
   generateDeviceCapabilityRequest: GenerateCapabilityImageRequest,
-  options: DevicesGenerateCapabilityImageOptions = { requestOptions: {} },
+  options: DevicesGenerateCapabilityImageOptions = { requestOptions: {} }
 ): PollerLike<OperationState<void>, void> {
   return getLongRunningPoller(
     context,
@@ -714,8 +716,8 @@ export function devicesGenerateCapabilityImage(
           deviceGroupName,
           deviceName,
           generateDeviceCapabilityRequest,
-          options,
+          options
         ),
-    },
+    }
   ) as PollerLike<OperationState<void>, void>;
 }
