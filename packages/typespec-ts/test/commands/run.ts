@@ -94,6 +94,8 @@ async function runTypespecHelper(env: GenEnv): Promise<void> {
 !/src/index.d.ts
 !/.gitignore
 !/tspconfig.yaml
+!/samples-dev/
+!/samples-dev/**.ts
 `
     );
   }
