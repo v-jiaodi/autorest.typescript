@@ -191,6 +191,7 @@ importers:
 
   ../../packages/typespec-test:
     specifiers:
+      '@azure-tools/cadl-ranch-expect': ^0.15.1
       '@azure-tools/typespec-autorest': '>=0.45.0 <1.0.0'
       '@azure-tools/typespec-azure-core': '>=0.45.0 <1.0.0'
       '@azure-tools/typespec-azure-resource-manager': '>=0.45.0 <1.0.0'
@@ -221,6 +222,7 @@ importers:
       '@typespec/versioning': 0.59.0_@typespec+compiler@0.59.0
       prettier: 3.1.1
     devDependencies:
+      '@azure-tools/cadl-ranch-expect': 0.15.1_y3yxhtjg35d3g6m2dacugmsjfu
       '@types/mocha': 5.2.7
       '@types/node': 18.18.0
       ts-node: 8.10.2_typescript@5.5.3
