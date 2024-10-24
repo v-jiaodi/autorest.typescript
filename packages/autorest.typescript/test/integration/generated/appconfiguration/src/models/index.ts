@@ -224,6 +224,36 @@ export enum KnownGet6ItemsItem {
   UserSystem = "user, system",
   /** UserXSystem */
   UserXSystem = "user x system ~",
+  /** Pascal */
+  Pascal = "pascal",
+  /** PascalCase */
+  PascalCase = "pascalCase",
+  /** PascalCase */
+  PascalCase = "PascalCase",
+  /** Pascalcase */
+  Pascalcase = "pascalcase",
+  /** Pascalcase */
+  Pascalcase = "Pascalcase",
+  /** PascalCase */
+  PascalCase = "pascal_case_",
+  /** PascalCase */
+  PascalCase = "pascal_case",
+  /** PascalCase */
+  PascalCase = "_pascal_case",
+  /** PascalCase */
+  PascalCase = "pascal, case",
+  /** MAXOfMLD */
+  MAXOfMLD = "MAX_of_MLD",
+  /** PascalCase6666 */
+  PascalCase6666 = "___pascal____case6666",
+  /** Ninety */
+  Ninety = "090",
+  /** Ten */
+  Ten = "10",
+  /** One0 */
+  One0 = "1.0",
+  /** 10 */
+  10 = "-1.0",
 }
 
 /**
@@ -240,7 +270,22 @@ export enum KnownGet6ItemsItem {
  * **locked** \
  * **etag** \
  * **user, system** \
- * **user x system ~**
+ * **user x system ~** \
+ * **pascal** \
+ * **pascalCase** \
+ * **PascalCase** \
+ * **pascalcase** \
+ * **Pascalcase** \
+ * **pascal_case_** \
+ * **pascal_case** \
+ * **_pascal_case** \
+ * **pascal, case** \
+ * **MAX_of_MLD** \
+ * **___pascal____case6666** \
+ * **090** \
+ * **10** \
+ * **1.0** \
+ * **-1.0**
  */
 export type Get6ItemsItem = string;
 
