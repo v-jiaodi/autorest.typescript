@@ -129,7 +129,7 @@ export function getCommonPackageScripts({
 
   return {
     clean:
-      "rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log",
+      "dev-tool run vendored rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log",
     "extract-api":
       "rimraf review && mkdirp ./review && api-extractor run --local",
     pack: "npm pack 2>&1",

@@ -62,7 +62,7 @@
     "@azure/eslint-plugin-azure-sdk": "^3.0.0"
   },
   "scripts": {
-    "clean": "rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log",
+    "clean": "dev-tool run vendored rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log",
     "extract-api": "dev-tool run vendored rimraf review && dev-tool run vendored mkdirp ./review && dev-tool run extract-api",
     "pack": "npm pack 2>&1",
     "lint": "eslint package.json api-extractor.json src test",

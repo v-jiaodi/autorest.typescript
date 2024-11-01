@@ -276,6 +276,8 @@ describe("Package file generation", () => {
       const packageFileContent = buildPackageFile(model);
       const packageFile = JSON.parse(packageFileContent?.content ?? "{}");
 
+      expect(packageFile.devDependencies).to.not.have.property("rimraf");
+      expect(packageFile.devDependencies).to.not.have.property("mkdirp");
       expect(packageFile.devDependencies).to.have.property("@vitest/browser");
       expect(packageFile.devDependencies).to.have.property(
         "@vitest/coverage-istanbul"
@@ -319,7 +321,7 @@ describe("Package file generation", () => {
       );
       expect(packageFile.scripts).to.have.property(
         "clean",
-        "rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log"
+        "dev-tool run vendored rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log"
       );
       expect(packageFile.scripts).to.have.property(
         "extract-api",
@@ -426,7 +428,7 @@ describe("Package file generation", () => {
       );
       expect(packageFile.scripts).to.have.property(
         "clean",
-        "rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log"
+        "dev-tool run vendored rimraf --glob dist dist-browser dist-esm test-dist temp types *.tgz *.log"
       );
       expect(packageFile.scripts).to.have.property(
         "extract-api",
