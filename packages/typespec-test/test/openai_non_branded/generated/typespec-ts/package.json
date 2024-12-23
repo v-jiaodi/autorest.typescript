@@ -48,7 +48,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.40.3",
     "@types/node": "^18.0.0",
-    "eslint": "^8.55.0",
+    "eslint": "^9.9.0",
     "typescript": "~5.6.2",
     "tshy": "^2.0.0",
     "rimraf": "^5.0.5",
@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "tslib": "^2.6.2",
-    "@typespec/ts-http-runtime": "1.0.0-alpha.20240314.2"
+    "@typespec/ts-http-runtime": "0.1.0"
   },
   "exports": {
     "./package.json": "./package.json",
