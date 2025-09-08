@@ -233,7 +233,8 @@ export function getDeserializePrivateFunction(
           context,
           deserializedType,
           deserializedRoot,
-          isBinaryPayload(context, response.type!.__raw!, contentTypes!)
+          response.type?.__raw &&
+            isBinaryPayload(context, response.type.__raw, contentTypes!)
             ? "binary"
             : getEncodeForType(deserializedType)
         )}`
