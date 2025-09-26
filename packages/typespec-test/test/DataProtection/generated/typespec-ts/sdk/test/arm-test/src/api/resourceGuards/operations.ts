@@ -1,0 +1,1209 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import { DataProtectionContext as Client } from "../index.js";
+import {
+  cloudErrorDeserializer,
+  DppBaseResource,
+  dppBaseResourceDeserializer,
+  _DppBaseResourceList,
+  _dppBaseResourceListDeserializer,
+  ResourceGuardResource,
+  resourceGuardResourceSerializer,
+  resourceGuardResourceDeserializer,
+  PatchResourceGuardInput,
+  patchResourceGuardInputSerializer,
+  _ResourceGuardResourceList,
+  _resourceGuardResourceListDeserializer,
+} from "../../models/models.js";
+import {
+  PagedAsyncIterableIterator,
+  buildPagedAsyncIterator,
+} from "../../static-helpers/pagingHelpers.js";
+import { expandUrlTemplate } from "../../static-helpers/urlTemplate.js";
+import {
+  ResourceGuardsGetBackupSecurityPINRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultBackupSecurityPINRequestsObjectOptionalParams,
+  ResourceGuardsGetDeleteProtectedItemRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultDeleteProtectedItemRequestsObjectOptionalParams,
+  ResourceGuardsGetUpdateProtectionPolicyRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultUpdateProtectionPolicyRequestsObjectOptionalParams,
+  ResourceGuardsGetUpdateProtectedItemRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultUpdateProtectedItemRequestsObjectOptionalParams,
+  ResourceGuardsGetDisableSoftDeleteRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultDisableSoftDeleteRequestsObjectOptionalParams,
+  ResourceGuardsGetResourcesInSubscriptionOptionalParams,
+  ResourceGuardsGetResourcesInResourceGroupOptionalParams,
+  ResourceGuardsDeleteOptionalParams,
+  ResourceGuardsPatchOptionalParams,
+  ResourceGuardsPutOptionalParams,
+  ResourceGuardsGetOptionalParams,
+  ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsOptionalParams,
+  ResourceGuardsGetDefaultDeleteResourceGuardProxyRequestsObjectOptionalParams,
+} from "./options.js";
+import {
+  StreamableMethod,
+  PathUncheckedResponse,
+  createRestError,
+  operationOptionsToRequestParameters,
+} from "@azure-rest/core-client";
+
+export function _getBackupSecurityPINRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetBackupSecurityPINRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getBackupSecurityPINRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getBackupSecurityPINRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetBackupSecurityPINRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getBackupSecurityPINRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getBackupSecurityPINRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultBackupSecurityPINRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultBackupSecurityPINRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultBackupSecurityPINRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultBackupSecurityPINRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultBackupSecurityPINRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultBackupSecurityPINRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultBackupSecurityPINRequestsObjectDeserialize(result);
+}
+
+export function _getDeleteProtectedItemRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDeleteProtectedItemRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDeleteProtectedItemRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getDeleteProtectedItemRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDeleteProtectedItemRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getDeleteProtectedItemRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getDeleteProtectedItemRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultDeleteProtectedItemRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDeleteProtectedItemRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultDeleteProtectedItemRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultDeleteProtectedItemRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDeleteProtectedItemRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultDeleteProtectedItemRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultDeleteProtectedItemRequestsObjectDeserialize(result);
+}
+
+export function _getUpdateProtectionPolicyRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetUpdateProtectionPolicyRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getUpdateProtectionPolicyRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getUpdateProtectionPolicyRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetUpdateProtectionPolicyRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getUpdateProtectionPolicyRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getUpdateProtectionPolicyRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultUpdateProtectionPolicyRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultUpdateProtectionPolicyRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultUpdateProtectionPolicyRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultUpdateProtectionPolicyRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultUpdateProtectionPolicyRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultUpdateProtectionPolicyRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultUpdateProtectionPolicyRequestsObjectDeserialize(result);
+}
+
+export function _getUpdateProtectedItemRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetUpdateProtectedItemRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getUpdateProtectedItemRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getUpdateProtectedItemRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetUpdateProtectedItemRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getUpdateProtectedItemRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getUpdateProtectedItemRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultUpdateProtectedItemRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultUpdateProtectedItemRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultUpdateProtectedItemRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultUpdateProtectedItemRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultUpdateProtectedItemRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultUpdateProtectedItemRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultUpdateProtectedItemRequestsObjectDeserialize(result);
+}
+
+export function _getDisableSoftDeleteRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDisableSoftDeleteRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDisableSoftDeleteRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getDisableSoftDeleteRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDisableSoftDeleteRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getDisableSoftDeleteRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getDisableSoftDeleteRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultDisableSoftDeleteRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDisableSoftDeleteRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultDisableSoftDeleteRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultDisableSoftDeleteRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDisableSoftDeleteRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultDisableSoftDeleteRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultDisableSoftDeleteRequestsObjectDeserialize(result);
+}
+
+export function _getResourcesInSubscriptionSend(
+  context: Client,
+  options: ResourceGuardsGetResourcesInSubscriptionOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getResourcesInSubscriptionDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_ResourceGuardResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _resourceGuardResourceListDeserializer(result.body);
+}
+
+/** Returns ResourceGuards collection belonging to a subscription. */
+export function getResourcesInSubscription(
+  context: Client,
+  options: ResourceGuardsGetResourcesInSubscriptionOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<ResourceGuardResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () => _getResourcesInSubscriptionSend(context, options),
+    _getResourcesInSubscriptionDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getResourcesInResourceGroupSend(
+  context: Client,
+  resourceGroupName: string,
+  options: ResourceGuardsGetResourcesInResourceGroupOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getResourcesInResourceGroupDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_ResourceGuardResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _resourceGuardResourceListDeserializer(result.body);
+}
+
+/** Returns ResourceGuards collection belonging to a ResourceGroup. */
+export function getResourcesInResourceGroup(
+  context: Client,
+  resourceGroupName: string,
+  options: ResourceGuardsGetResourcesInResourceGroupOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<ResourceGuardResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () => _getResourcesInResourceGroupSend(context, resourceGroupName, options),
+    _getResourcesInResourceGroupDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _$deleteSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsDeleteOptionalParams = { requestOptions: {} },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .delete({ ...operationOptionsToRequestParameters(options) });
+}
+
+export async function _$deleteDeserialize(
+  result: PathUncheckedResponse,
+): Promise<void> {
+  const expectedStatuses = ["200", "204"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return;
+}
+
+/** Deletes a ResourceGuard resource from the resource group. */
+/**
+ *  @fixme delete is a reserved word that cannot be used as an operation name.
+ *         Please add @clientName("clientName") or @clientName("<JS-Specific-Name>", "javascript")
+ *         to the operation to override the generated name.
+ */
+export async function $delete(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsDeleteOptionalParams = { requestOptions: {} },
+): Promise<void> {
+  const result = await _$deleteSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    options,
+  );
+  return _$deleteDeserialize(result);
+}
+
+export function _patchSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  parameters: PatchResourceGuardInput,
+  options: ResourceGuardsPatchOptionalParams = { requestOptions: {} },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .patch({
+      ...operationOptionsToRequestParameters(options),
+      contentType: "application/json",
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+      body: patchResourceGuardInputSerializer(parameters),
+    });
+}
+
+export async function _patchDeserialize(
+  result: PathUncheckedResponse,
+): Promise<ResourceGuardResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return resourceGuardResourceDeserializer(result.body);
+}
+
+/** Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource. */
+export async function patch(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  parameters: PatchResourceGuardInput,
+  options: ResourceGuardsPatchOptionalParams = { requestOptions: {} },
+): Promise<ResourceGuardResource> {
+  const result = await _patchSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    parameters,
+    options,
+  );
+  return _patchDeserialize(result);
+}
+
+export function _putSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  parameters: ResourceGuardResource,
+  options: ResourceGuardsPutOptionalParams = { requestOptions: {} },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .put({
+      ...operationOptionsToRequestParameters(options),
+      contentType: "application/json",
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+      body: resourceGuardResourceSerializer(parameters),
+    });
+}
+
+export async function _putDeserialize(
+  result: PathUncheckedResponse,
+): Promise<ResourceGuardResource> {
+  const expectedStatuses = ["200", "201"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return resourceGuardResourceDeserializer(result.body);
+}
+
+/** Creates or updates a ResourceGuard resource belonging to a resource group. */
+export async function put(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  parameters: ResourceGuardResource,
+  options: ResourceGuardsPutOptionalParams = { requestOptions: {} },
+): Promise<ResourceGuardResource> {
+  const result = await _putSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    parameters,
+    options,
+  );
+  return _putDeserialize(result);
+}
+
+export function _getSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetOptionalParams = { requestOptions: {} },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDeserialize(
+  result: PathUncheckedResponse,
+): Promise<ResourceGuardResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return resourceGuardResourceDeserializer(result.body);
+}
+
+/** Returns a ResourceGuard belonging to a resource group. */
+export async function get(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetOptionalParams = { requestOptions: {} },
+): Promise<ResourceGuardResource> {
+  const result = await _getSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    options,
+  );
+  return _getDeserialize(result);
+}
+
+export function _getDeleteResourceGuardProxyRequestsObjectsSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDeleteResourceGuardProxyRequestsObjectsDeserialize(
+  result: PathUncheckedResponse,
+): Promise<_DppBaseResourceList> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return _dppBaseResourceListDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export function getDeleteResourceGuardProxyRequestsObjects(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  options: ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsOptionalParams = {
+    requestOptions: {},
+  },
+): PagedAsyncIterableIterator<DppBaseResource> {
+  return buildPagedAsyncIterator(
+    context,
+    () =>
+      _getDeleteResourceGuardProxyRequestsObjectsSend(
+        context,
+        resourceGroupName,
+        resourceGuardsName,
+        options,
+      ),
+    _getDeleteResourceGuardProxyRequestsObjectsDeserialize,
+    ["200"],
+    { itemName: "value", nextLinkName: "nextLink" },
+  );
+}
+
+export function _getDefaultDeleteResourceGuardProxyRequestsObjectSend(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDeleteResourceGuardProxyRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): StreamableMethod {
+  const path = expandUrlTemplate(
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}{?api%2Dversion}",
+    {
+      subscriptionId: context.subscriptionId,
+      resourceGroupName: resourceGroupName,
+      resourceGuardsName: resourceGuardsName,
+      requestName: requestName,
+      "api%2Dversion": context.apiVersion,
+    },
+    {
+      allowReserved: options?.requestOptions?.skipUrlEncoding,
+    },
+  );
+  return context
+    .path(path)
+    .get({
+      ...operationOptionsToRequestParameters(options),
+      headers: {
+        accept: "application/json",
+        ...options.requestOptions?.headers,
+      },
+    });
+}
+
+export async function _getDefaultDeleteResourceGuardProxyRequestsObjectDeserialize(
+  result: PathUncheckedResponse,
+): Promise<DppBaseResource> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    const error = createRestError(result);
+    error.details = cloudErrorDeserializer(result.body);
+    throw error;
+  }
+
+  return dppBaseResourceDeserializer(result.body);
+}
+
+/** Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. */
+export async function getDefaultDeleteResourceGuardProxyRequestsObject(
+  context: Client,
+  resourceGroupName: string,
+  resourceGuardsName: string,
+  requestName: string,
+  options: ResourceGuardsGetDefaultDeleteResourceGuardProxyRequestsObjectOptionalParams = {
+    requestOptions: {},
+  },
+): Promise<DppBaseResource> {
+  const result = await _getDefaultDeleteResourceGuardProxyRequestsObjectSend(
+    context,
+    resourceGroupName,
+    resourceGuardsName,
+    requestName,
+    options,
+  );
+  return _getDefaultDeleteResourceGuardProxyRequestsObjectDeserialize(result);
+}
