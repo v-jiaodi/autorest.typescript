@@ -724,7 +724,6 @@ export function backupDatasourceParametersDeserializer(
 export type BackupDatasourceParametersUnion =
   | KubernetesClusterBackupDatasourceParameters
   | BlobBackupDatasourceParametersUnion
-  | AdlsBlobBackupDatasourceParameters
   | BackupDatasourceParameters;
 
 export function backupDatasourceParametersUnionSerializer(
@@ -737,13 +736,9 @@ export function backupDatasourceParametersUnionSerializer(
       );
 
     case "BlobBackupDatasourceParameters":
+    case "AdlsBlobBackupDatasourceParameters":
       return blobBackupDatasourceParametersUnionSerializer(
         item as BlobBackupDatasourceParametersUnion,
-      );
-
-    case "AdlsBlobBackupDatasourceParameters":
-      return adlsBlobBackupDatasourceParametersSerializer(
-        item as AdlsBlobBackupDatasourceParameters,
       );
 
     default:
@@ -761,13 +756,9 @@ export function backupDatasourceParametersUnionDeserializer(
       );
 
     case "BlobBackupDatasourceParameters":
+    case "AdlsBlobBackupDatasourceParameters":
       return blobBackupDatasourceParametersUnionDeserializer(
         item as BlobBackupDatasourceParametersUnion,
-      );
-
-    case "AdlsBlobBackupDatasourceParameters":
-      return adlsBlobBackupDatasourceParametersDeserializer(
-        item as AdlsBlobBackupDatasourceParameters,
       );
 
     default:
@@ -943,7 +934,9 @@ export interface BlobBackupDatasourceParameters
   containersList: string[];
   /** Type of the specific object - used for deserializing */
   /** The discriminator possible values: AdlsBlobBackupDatasourceParameters */
-  objectType: "BlobBackupDatasourceParameters";
+  objectType:
+    | "BlobBackupDatasourceParameters"
+    | "AdlsBlobBackupDatasourceParameters";
 }
 
 export function blobBackupDatasourceParametersSerializer(
@@ -1756,7 +1749,6 @@ export function azureBackupRestoreRequestSerializer(
 /** Alias for AzureBackupRestoreRequestUnion */
 export type AzureBackupRestoreRequestUnion =
   | AzureBackupRecoveryPointBasedRestoreRequestUnion
-  | AzureBackupRestoreWithRehydrationRequest
   | AzureBackupRecoveryTimeBasedRestoreRequest
   | AzureBackupRestoreRequest;
 
@@ -1765,13 +1757,9 @@ export function azureBackupRestoreRequestUnionSerializer(
 ): any {
   switch (item.objectType) {
     case "AzureBackupRecoveryPointBasedRestoreRequest":
+    case "AzureBackupRestoreWithRehydrationRequest":
       return azureBackupRecoveryPointBasedRestoreRequestUnionSerializer(
         item as AzureBackupRecoveryPointBasedRestoreRequestUnion,
-      );
-
-    case "AzureBackupRestoreWithRehydrationRequest":
-      return azureBackupRestoreWithRehydrationRequestSerializer(
-        item as AzureBackupRestoreWithRehydrationRequest,
       );
 
     case "AzureBackupRecoveryTimeBasedRestoreRequest":
@@ -2359,7 +2347,9 @@ export type SourceDataStoreType = string;
 export interface AzureBackupRecoveryPointBasedRestoreRequest
   extends AzureBackupRestoreRequest {
   recoveryPointId: string;
-  objectType: "AzureBackupRecoveryPointBasedRestoreRequest";
+  objectType:
+    | "AzureBackupRecoveryPointBasedRestoreRequest"
+    | "AzureBackupRestoreWithRehydrationRequest";
 }
 
 export function azureBackupRecoveryPointBasedRestoreRequestSerializer(
