@@ -1448,15 +1448,9 @@ export function protectedItemDeserializer(item: any): ProtectedItem {
 /** Alias for ProtectedItemUnion */
 export type ProtectedItemUnion =
   | AzureFileshareProtectedItem
-  | AzureIaaSClassicComputeVMProtectedItem
   | AzureIaaSVMProtectedItemUnion
-  | AzureIaaSComputeVMProtectedItem
   | AzureSqlProtectedItem
   | AzureVmWorkloadProtectedItemUnion
-  | AzureVmWorkloadSAPAseDatabaseProtectedItem
-  | AzureVmWorkloadSAPHanaDatabaseProtectedItem
-  | AzureVmWorkloadSAPHanaDBInstanceProtectedItem
-  | AzureVmWorkloadSQLDatabaseProtectedItem
   | DPMProtectedItem
   | GenericProtectedItem
   | MabFileFolderProtectedItem
@@ -1469,47 +1463,23 @@ export function protectedItemUnionSerializer(item: ProtectedItemUnion): any {
         item as AzureFileshareProtectedItem,
       );
 
-    case "Microsoft.ClassicCompute/virtualMachines":
-      return azureIaaSClassicComputeVMProtectedItemSerializer(
-        item as AzureIaaSClassicComputeVMProtectedItem,
-      );
-
     case "AzureIaaSVMProtectedItem":
+    case "Microsoft.ClassicCompute/virtualMachines":
+    case "Microsoft.Compute/virtualMachines":
       return azureIaaSVMProtectedItemUnionSerializer(
         item as AzureIaaSVMProtectedItemUnion,
-      );
-
-    case "Microsoft.Compute/virtualMachines":
-      return azureIaaSComputeVMProtectedItemSerializer(
-        item as AzureIaaSComputeVMProtectedItem,
       );
 
     case "Microsoft.Sql/servers/databases":
       return azureSqlProtectedItemSerializer(item as AzureSqlProtectedItem);
 
     case "AzureVmWorkloadProtectedItem":
+    case "AzureVmWorkloadSAPAseDatabase":
+    case "AzureVmWorkloadSAPHanaDatabase":
+    case "AzureVmWorkloadSAPHanaDBInstance":
+    case "AzureVmWorkloadSQLDatabase":
       return azureVmWorkloadProtectedItemUnionSerializer(
         item as AzureVmWorkloadProtectedItemUnion,
-      );
-
-    case "AzureVmWorkloadSAPAseDatabase":
-      return azureVmWorkloadSAPAseDatabaseProtectedItemSerializer(
-        item as AzureVmWorkloadSAPAseDatabaseProtectedItem,
-      );
-
-    case "AzureVmWorkloadSAPHanaDatabase":
-      return azureVmWorkloadSAPHanaDatabaseProtectedItemSerializer(
-        item as AzureVmWorkloadSAPHanaDatabaseProtectedItem,
-      );
-
-    case "AzureVmWorkloadSAPHanaDBInstance":
-      return azureVmWorkloadSAPHanaDBInstanceProtectedItemSerializer(
-        item as AzureVmWorkloadSAPHanaDBInstanceProtectedItem,
-      );
-
-    case "AzureVmWorkloadSQLDatabase":
-      return azureVmWorkloadSQLDatabaseProtectedItemSerializer(
-        item as AzureVmWorkloadSQLDatabaseProtectedItem,
       );
 
     case "DPMProtectedItem":
@@ -1535,47 +1505,23 @@ export function protectedItemUnionDeserializer(item: any): ProtectedItemUnion {
         item as AzureFileshareProtectedItem,
       );
 
-    case "Microsoft.ClassicCompute/virtualMachines":
-      return azureIaaSClassicComputeVMProtectedItemDeserializer(
-        item as AzureIaaSClassicComputeVMProtectedItem,
-      );
-
     case "AzureIaaSVMProtectedItem":
+    case "Microsoft.ClassicCompute/virtualMachines":
+    case "Microsoft.Compute/virtualMachines":
       return azureIaaSVMProtectedItemUnionDeserializer(
         item as AzureIaaSVMProtectedItemUnion,
-      );
-
-    case "Microsoft.Compute/virtualMachines":
-      return azureIaaSComputeVMProtectedItemDeserializer(
-        item as AzureIaaSComputeVMProtectedItem,
       );
 
     case "Microsoft.Sql/servers/databases":
       return azureSqlProtectedItemDeserializer(item as AzureSqlProtectedItem);
 
     case "AzureVmWorkloadProtectedItem":
+    case "AzureVmWorkloadSAPAseDatabase":
+    case "AzureVmWorkloadSAPHanaDatabase":
+    case "AzureVmWorkloadSAPHanaDBInstance":
+    case "AzureVmWorkloadSQLDatabase":
       return azureVmWorkloadProtectedItemUnionDeserializer(
         item as AzureVmWorkloadProtectedItemUnion,
-      );
-
-    case "AzureVmWorkloadSAPAseDatabase":
-      return azureVmWorkloadSAPAseDatabaseProtectedItemDeserializer(
-        item as AzureVmWorkloadSAPAseDatabaseProtectedItem,
-      );
-
-    case "AzureVmWorkloadSAPHanaDatabase":
-      return azureVmWorkloadSAPHanaDatabaseProtectedItemDeserializer(
-        item as AzureVmWorkloadSAPHanaDatabaseProtectedItem,
-      );
-
-    case "AzureVmWorkloadSAPHanaDBInstance":
-      return azureVmWorkloadSAPHanaDBInstanceProtectedItemDeserializer(
-        item as AzureVmWorkloadSAPHanaDBInstanceProtectedItem,
-      );
-
-    case "AzureVmWorkloadSQLDatabase":
-      return azureVmWorkloadSQLDatabaseProtectedItemDeserializer(
-        item as AzureVmWorkloadSQLDatabaseProtectedItem,
       );
 
     case "DPMProtectedItem":
@@ -2149,7 +2095,10 @@ export function azureIaaSClassicComputeVMProtectedItemDeserializer(
 export interface AzureIaaSVMProtectedItem extends ProtectedItem {
   /** backup item type. */
   /** The discriminator possible values: Microsoft.ClassicCompute/virtualMachines, Microsoft.Compute/virtualMachines */
-  protectedItemType: "AzureIaaSVMProtectedItem";
+  protectedItemType:
+    | "AzureIaaSVMProtectedItem"
+    | "Microsoft.ClassicCompute/virtualMachines"
+    | "Microsoft.Compute/virtualMachines";
   /** Friendly name of the VM represented by this backup item. */
   readonly friendlyName?: string;
   /** Fully qualified ARM ID of the virtual machine represented by this item. */
@@ -2775,7 +2724,12 @@ export function azureSqlProtectedItemExtendedInfoDeserializer(
 export interface AzureVmWorkloadProtectedItem extends ProtectedItem {
   /** backup item type. */
   /** The discriminator possible values: AzureVmWorkloadSAPAseDatabase, AzureVmWorkloadSAPHanaDatabase, AzureVmWorkloadSAPHanaDBInstance, AzureVmWorkloadSQLDatabase */
-  protectedItemType: "AzureVmWorkloadProtectedItem";
+  protectedItemType:
+    | "AzureVmWorkloadProtectedItem"
+    | "AzureVmWorkloadSAPAseDatabase"
+    | "AzureVmWorkloadSAPHanaDatabase"
+    | "AzureVmWorkloadSAPHanaDBInstance"
+    | "AzureVmWorkloadSQLDatabase";
   /** Friendly name of the DB represented by this backup item. */
   readonly friendlyName?: string;
   /** Host/Cluster Name for instance or AG */
@@ -4317,14 +4271,7 @@ export function recoveryPointDeserializer(item: any): RecoveryPoint {
 /** Alias for RecoveryPointUnion */
 export type RecoveryPointUnion =
   | AzureFileShareRecoveryPoint
-  | AzureWorkloadPointInTimeRecoveryPointUnion
   | AzureWorkloadRecoveryPointUnion
-  | AzureWorkloadSAPHanaPointInTimeRecoveryPoint
-  | AzureWorkloadSAPHanaRecoveryPoint
-  | AzureWorkloadSAPAsePointInTimeRecoveryPoint
-  | AzureWorkloadSAPAseRecoveryPoint
-  | AzureWorkloadSQLPointInTimeRecoveryPoint
-  | AzureWorkloadSQLRecoveryPointUnion
   | GenericRecoveryPoint
   | IaasVMRecoveryPoint
   | RecoveryPoint;
@@ -4336,44 +4283,16 @@ export function recoveryPointUnionDeserializer(item: any): RecoveryPointUnion {
         item as AzureFileShareRecoveryPoint,
       );
 
-    case "AzureWorkloadPointInTimeRecoveryPoint":
-      return azureWorkloadPointInTimeRecoveryPointUnionDeserializer(
-        item as AzureWorkloadPointInTimeRecoveryPointUnion,
-      );
-
     case "AzureWorkloadRecoveryPoint":
+    case "AzureWorkloadPointInTimeRecoveryPoint":
+    case "AzureWorkloadSAPHanaRecoveryPoint":
+    case "AzureWorkloadSAPAseRecoveryPoint":
+    case "AzureWorkloadSQLRecoveryPoint":
+    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
+    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
+    case "AzureWorkloadSQLPointInTimeRecoveryPoint":
       return azureWorkloadRecoveryPointUnionDeserializer(
         item as AzureWorkloadRecoveryPointUnion,
-      );
-
-    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
-      return azureWorkloadSAPHanaPointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSAPHanaPointInTimeRecoveryPoint,
-      );
-
-    case "AzureWorkloadSAPHanaRecoveryPoint":
-      return azureWorkloadSAPHanaRecoveryPointDeserializer(
-        item as AzureWorkloadSAPHanaRecoveryPoint,
-      );
-
-    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
-      return azureWorkloadSAPAsePointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSAPAsePointInTimeRecoveryPoint,
-      );
-
-    case "AzureWorkloadSAPAseRecoveryPoint":
-      return azureWorkloadSAPAseRecoveryPointDeserializer(
-        item as AzureWorkloadSAPAseRecoveryPoint,
-      );
-
-    case "AzureWorkloadSQLPointInTimeRecoveryPoint":
-      return azureWorkloadSQLPointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSQLPointInTimeRecoveryPoint,
-      );
-
-    case "AzureWorkloadSQLRecoveryPoint":
-      return azureWorkloadSQLRecoveryPointUnionDeserializer(
-        item as AzureWorkloadSQLRecoveryPointUnion,
       );
 
     case "GenericRecoveryPoint":
@@ -4507,7 +4426,10 @@ export interface AzureWorkloadPointInTimeRecoveryPoint
   extends AzureWorkloadRecoveryPoint {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSAPHanaPointInTimeRecoveryPoint, AzureWorkloadSAPAsePointInTimeRecoveryPoint */
-  objectType: "AzureWorkloadPointInTimeRecoveryPoint";
+  objectType:
+    | "AzureWorkloadPointInTimeRecoveryPoint"
+    | "AzureWorkloadSAPHanaPointInTimeRecoveryPoint"
+    | "AzureWorkloadSAPAsePointInTimeRecoveryPoint";
   /** List of log ranges */
   timeRanges?: PointInTimeRange[];
 }
@@ -4664,7 +4586,15 @@ export function azureWorkloadSAPAsePointInTimeRecoveryPointDeserializer(
 export interface AzureWorkloadRecoveryPoint extends RecoveryPoint {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadPointInTimeRecoveryPoint, AzureWorkloadSAPHanaPointInTimeRecoveryPoint, AzureWorkloadSAPHanaRecoveryPoint, AzureWorkloadSAPAsePointInTimeRecoveryPoint, AzureWorkloadSAPAseRecoveryPoint, AzureWorkloadSQLPointInTimeRecoveryPoint, AzureWorkloadSQLRecoveryPoint */
-  objectType: "AzureWorkloadRecoveryPoint";
+  objectType:
+    | "AzureWorkloadRecoveryPoint"
+    | "AzureWorkloadPointInTimeRecoveryPoint"
+    | "AzureWorkloadSAPHanaRecoveryPoint"
+    | "AzureWorkloadSAPAseRecoveryPoint"
+    | "AzureWorkloadSQLRecoveryPoint"
+    | "AzureWorkloadSAPHanaPointInTimeRecoveryPoint"
+    | "AzureWorkloadSAPAsePointInTimeRecoveryPoint"
+    | "AzureWorkloadSQLPointInTimeRecoveryPoint";
   /** UTC time at which recovery point was created */
   recoveryPointTimeInUTC?: Date;
   /** Type of restore point */
@@ -4708,11 +4638,8 @@ export function azureWorkloadRecoveryPointDeserializer(
 /** Alias for AzureWorkloadRecoveryPointUnion */
 export type AzureWorkloadRecoveryPointUnion =
   | AzureWorkloadPointInTimeRecoveryPointUnion
-  | AzureWorkloadSAPHanaPointInTimeRecoveryPoint
   | AzureWorkloadSAPHanaRecoveryPoint
-  | AzureWorkloadSAPAsePointInTimeRecoveryPoint
   | AzureWorkloadSAPAseRecoveryPoint
-  | AzureWorkloadSQLPointInTimeRecoveryPoint
   | AzureWorkloadSQLRecoveryPointUnion
   | AzureWorkloadRecoveryPoint;
 
@@ -4721,13 +4648,10 @@ export function azureWorkloadRecoveryPointUnionDeserializer(
 ): AzureWorkloadRecoveryPointUnion {
   switch (item.objectType) {
     case "AzureWorkloadPointInTimeRecoveryPoint":
+    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
+    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
       return azureWorkloadPointInTimeRecoveryPointUnionDeserializer(
         item as AzureWorkloadPointInTimeRecoveryPointUnion,
-      );
-
-    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
-      return azureWorkloadSAPHanaPointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSAPHanaPointInTimeRecoveryPoint,
       );
 
     case "AzureWorkloadSAPHanaRecoveryPoint":
@@ -4735,22 +4659,13 @@ export function azureWorkloadRecoveryPointUnionDeserializer(
         item as AzureWorkloadSAPHanaRecoveryPoint,
       );
 
-    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
-      return azureWorkloadSAPAsePointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSAPAsePointInTimeRecoveryPoint,
-      );
-
     case "AzureWorkloadSAPAseRecoveryPoint":
       return azureWorkloadSAPAseRecoveryPointDeserializer(
         item as AzureWorkloadSAPAseRecoveryPoint,
       );
 
-    case "AzureWorkloadSQLPointInTimeRecoveryPoint":
-      return azureWorkloadSQLPointInTimeRecoveryPointDeserializer(
-        item as AzureWorkloadSQLPointInTimeRecoveryPoint,
-      );
-
     case "AzureWorkloadSQLRecoveryPoint":
+    case "AzureWorkloadSQLPointInTimeRecoveryPoint":
       return azureWorkloadSQLRecoveryPointUnionDeserializer(
         item as AzureWorkloadSQLRecoveryPointUnion,
       );
@@ -4958,7 +4873,9 @@ export interface AzureWorkloadSQLRecoveryPoint
   extends AzureWorkloadRecoveryPoint {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSQLPointInTimeRecoveryPoint */
-  objectType: "AzureWorkloadSQLRecoveryPoint";
+  objectType:
+    | "AzureWorkloadSQLRecoveryPoint"
+    | "AzureWorkloadSQLPointInTimeRecoveryPoint";
   /**
    * Extended Info that provides data directory details. Will be populated in two cases:
    * When a specific recovery point is accessed using GetRecoveryPoint
@@ -5457,16 +5374,11 @@ export function protectionContainerDeserializer(
 
 /** Alias for ProtectionContainerUnion */
 export type ProtectionContainerUnion =
-  | AzureBackupServerContainer
   | DpmContainerUnion
-  | AzureIaaSClassicComputeVMContainer
   | IaaSVMContainerUnion
-  | AzureIaaSComputeVMContainer
-  | AzureSqlagWorkloadContainerProtectionContainer
   | AzureWorkloadContainerUnion
   | AzureSqlContainer
   | AzureStorageContainer
-  | AzureVMAppContainerProtectionContainer
   | GenericContainer
   | MabContainer
   | ProtectionContainer;
@@ -5475,33 +5387,18 @@ export function protectionContainerUnionSerializer(
   item: ProtectionContainerUnion,
 ): any {
   switch (item.containerType) {
-    case "AzureBackupServerContainer":
-      return azureBackupServerContainerSerializer(
-        item as AzureBackupServerContainer,
-      );
-
     case "DPMContainer":
+    case "AzureBackupServerContainer":
       return dpmContainerUnionSerializer(item as DpmContainerUnion);
 
-    case "Microsoft.ClassicCompute/virtualMachines":
-      return azureIaaSClassicComputeVMContainerSerializer(
-        item as AzureIaaSClassicComputeVMContainer,
-      );
-
     case "IaasVMContainer":
+    case "Microsoft.ClassicCompute/virtualMachines":
+    case "Microsoft.Compute/virtualMachines":
       return iaaSVMContainerUnionSerializer(item as IaaSVMContainerUnion);
 
-    case "Microsoft.Compute/virtualMachines":
-      return azureIaaSComputeVMContainerSerializer(
-        item as AzureIaaSComputeVMContainer,
-      );
-
-    case "SQLAGWorkLoadContainer":
-      return azureSqlagWorkloadContainerProtectionContainerSerializer(
-        item as AzureSqlagWorkloadContainerProtectionContainer,
-      );
-
     case "AzureWorkloadContainer":
+    case "SQLAGWorkLoadContainer":
+    case "VMAppContainer":
       return azureWorkloadContainerUnionSerializer(
         item as AzureWorkloadContainerUnion,
       );
@@ -5511,11 +5408,6 @@ export function protectionContainerUnionSerializer(
 
     case "StorageContainer":
       return azureStorageContainerSerializer(item as AzureStorageContainer);
-
-    case "VMAppContainer":
-      return azureVMAppContainerProtectionContainerSerializer(
-        item as AzureVMAppContainerProtectionContainer,
-      );
 
     case "GenericContainer":
       return genericContainerSerializer(item as GenericContainer);
@@ -5532,33 +5424,18 @@ export function protectionContainerUnionDeserializer(
   item: any,
 ): ProtectionContainerUnion {
   switch (item.containerType) {
-    case "AzureBackupServerContainer":
-      return azureBackupServerContainerDeserializer(
-        item as AzureBackupServerContainer,
-      );
-
     case "DPMContainer":
+    case "AzureBackupServerContainer":
       return dpmContainerUnionDeserializer(item as DpmContainerUnion);
 
-    case "Microsoft.ClassicCompute/virtualMachines":
-      return azureIaaSClassicComputeVMContainerDeserializer(
-        item as AzureIaaSClassicComputeVMContainer,
-      );
-
     case "IaasVMContainer":
+    case "Microsoft.ClassicCompute/virtualMachines":
+    case "Microsoft.Compute/virtualMachines":
       return iaaSVMContainerUnionDeserializer(item as IaaSVMContainerUnion);
 
-    case "Microsoft.Compute/virtualMachines":
-      return azureIaaSComputeVMContainerDeserializer(
-        item as AzureIaaSComputeVMContainer,
-      );
-
-    case "SQLAGWorkLoadContainer":
-      return azureSqlagWorkloadContainerProtectionContainerDeserializer(
-        item as AzureSqlagWorkloadContainerProtectionContainer,
-      );
-
     case "AzureWorkloadContainer":
+    case "SQLAGWorkLoadContainer":
+    case "VMAppContainer":
       return azureWorkloadContainerUnionDeserializer(
         item as AzureWorkloadContainerUnion,
       );
@@ -5568,11 +5445,6 @@ export function protectionContainerUnionDeserializer(
 
     case "StorageContainer":
       return azureStorageContainerDeserializer(item as AzureStorageContainer);
-
-    case "VMAppContainer":
-      return azureVMAppContainerProtectionContainerDeserializer(
-        item as AzureVMAppContainerProtectionContainer,
-      );
 
     case "GenericContainer":
       return genericContainerDeserializer(item as GenericContainer);
@@ -5684,7 +5556,7 @@ export interface DpmContainer extends ProtectionContainer {
    * Backup is VMAppContainer
    */
   /** The discriminator possible values: AzureBackupServerContainer */
-  containerType: "DPMContainer";
+  containerType: "DPMContainer" | "AzureBackupServerContainer";
   /** Specifies whether the container is re-registrable. */
   canReRegister?: boolean;
   /** ID of container. */
@@ -5858,7 +5730,10 @@ export interface IaaSVMContainer extends ProtectionContainer {
    * Backup is VMAppContainer
    */
   /** The discriminator possible values: Microsoft.ClassicCompute/virtualMachines, Microsoft.Compute/virtualMachines */
-  containerType: "IaasVMContainer";
+  containerType:
+    | "IaasVMContainer"
+    | "Microsoft.ClassicCompute/virtualMachines"
+    | "Microsoft.Compute/virtualMachines";
   /** Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. */
   virtualMachineId?: string;
   /** Specifies whether the container represents a Classic or an Azure Resource Manager VM. */
@@ -6047,7 +5922,10 @@ export interface AzureWorkloadContainer extends ProtectionContainer {
    * Backup is VMAppContainer
    */
   /** The discriminator possible values: SQLAGWorkLoadContainer, VMAppContainer */
-  containerType: "AzureWorkloadContainer";
+  containerType:
+    | "AzureWorkloadContainer"
+    | "SQLAGWorkLoadContainer"
+    | "VMAppContainer";
   /** ARM ID of the virtual machine represented by this Azure Workload Container */
   sourceResourceId?: string;
   /** Time stamp when this container was updated. */
@@ -6996,51 +6874,19 @@ export function workloadItemDeserializer(item: any): WorkloadItem {
 }
 
 /** Alias for WorkloadItemUnion */
-export type WorkloadItemUnion =
-  | AzureVmWorkloadItemUnion
-  | AzureVmWorkloadSAPAseDatabaseWorkloadItem
-  | AzureVmWorkloadSAPAseSystemWorkloadItem
-  | AzureVmWorkloadSAPHanaDatabaseWorkloadItem
-  | AzureVmWorkloadSAPHanaSystemWorkloadItem
-  | AzureVmWorkloadSQLDatabaseWorkloadItem
-  | AzureVmWorkloadSQLInstanceWorkloadItem
-  | WorkloadItem;
+export type WorkloadItemUnion = AzureVmWorkloadItemUnion | WorkloadItem;
 
 export function workloadItemUnionDeserializer(item: any): WorkloadItemUnion {
   switch (item.workloadItemType) {
     case "AzureVmWorkloadItem":
+    case "SAPAseDatabase":
+    case "SAPAseSystem":
+    case "SAPHanaDatabase":
+    case "SAPHanaSystem":
+    case "SQLDataBase":
+    case "SQLInstance":
       return azureVmWorkloadItemUnionDeserializer(
         item as AzureVmWorkloadItemUnion,
-      );
-
-    case "SAPAseDatabase":
-      return azureVmWorkloadSAPAseDatabaseWorkloadItemDeserializer(
-        item as AzureVmWorkloadSAPAseDatabaseWorkloadItem,
-      );
-
-    case "SAPAseSystem":
-      return azureVmWorkloadSAPAseSystemWorkloadItemDeserializer(
-        item as AzureVmWorkloadSAPAseSystemWorkloadItem,
-      );
-
-    case "SAPHanaDatabase":
-      return azureVmWorkloadSAPHanaDatabaseWorkloadItemDeserializer(
-        item as AzureVmWorkloadSAPHanaDatabaseWorkloadItem,
-      );
-
-    case "SAPHanaSystem":
-      return azureVmWorkloadSAPHanaSystemWorkloadItemDeserializer(
-        item as AzureVmWorkloadSAPHanaSystemWorkloadItem,
-      );
-
-    case "SQLDataBase":
-      return azureVmWorkloadSQLDatabaseWorkloadItemDeserializer(
-        item as AzureVmWorkloadSQLDatabaseWorkloadItem,
-      );
-
-    case "SQLInstance":
-      return azureVmWorkloadSQLInstanceWorkloadItemDeserializer(
-        item as AzureVmWorkloadSQLInstanceWorkloadItem,
       );
 
     default:
@@ -7079,7 +6925,14 @@ export type ProtectionStatus = string;
 export interface AzureVmWorkloadItem extends WorkloadItem {
   /** Type of the backup item. */
   /** The discriminator possible values: SAPAseDatabase, SAPAseSystem, SAPHanaDatabase, SAPHanaSystem, SQLDataBase, SQLInstance */
-  workloadItemType: "AzureVmWorkloadItem";
+  workloadItemType:
+    | "AzureVmWorkloadItem"
+    | "SAPAseDatabase"
+    | "SAPAseSystem"
+    | "SAPHanaDatabase"
+    | "SAPHanaSystem"
+    | "SQLDataBase"
+    | "SQLInstance";
   /** Name for instance or AG */
   parentName?: string;
   /** Host/Cluster Name for instance or AG */
@@ -7355,20 +7208,8 @@ export function restoreRequestSerializer(item: RestoreRequest): any {
 /** Alias for RestoreRequestUnion */
 export type RestoreRequestUnion =
   | AzureFileShareRestoreRequest
-  | AzureWorkloadPointInTimeRestoreRequest
   | AzureWorkloadRestoreRequestUnion
-  | AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion
-  | AzureWorkloadSAPHanaRestoreRequestUnion
-  | AzureWorkloadSAPAsePointInTimeRestoreRequest
-  | AzureWorkloadSAPAseRestoreRequestUnion
-  | AzureWorkloadSQLPointInTimeRestoreRequestUnion
-  | AzureWorkloadSQLRestoreRequestUnion
   | IaasVMRestoreRequestUnion
-  | AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest
-  | AzureWorkloadSAPHanaRestoreWithRehydrateRequest
-  | AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest
-  | AzureWorkloadSQLRestoreWithRehydrateRequest
-  | IaasVMRestoreWithRehydrationRequest
   | RestoreRequest;
 
 export function restoreRequestUnionSerializer(item: RestoreRequestUnion): any {
@@ -7378,74 +7219,26 @@ export function restoreRequestUnionSerializer(item: RestoreRequestUnion): any {
         item as AzureFileShareRestoreRequest,
       );
 
-    case "AzureWorkloadPointInTimeRestoreRequest":
-      return azureWorkloadPointInTimeRestoreRequestSerializer(
-        item as AzureWorkloadPointInTimeRestoreRequest,
-      );
-
     case "AzureWorkloadRestoreRequest":
+    case "AzureWorkloadPointInTimeRestoreRequest":
+    case "AzureWorkloadSAPHanaRestoreRequest":
+    case "AzureWorkloadSAPAseRestoreRequest":
+    case "AzureWorkloadSQLRestoreRequest":
+    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
+    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
+    case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
+    case "AzureWorkloadSQLPointInTimeRestoreRequest":
+    case "AzureWorkloadSQLRestoreWithRehydrateRequest":
+    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
+    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
       return azureWorkloadRestoreRequestUnionSerializer(
         item as AzureWorkloadRestoreRequestUnion,
       );
 
-    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
-      return azureWorkloadSAPHanaPointInTimeRestoreRequestUnionSerializer(
-        item as AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSAPHanaRestoreRequest":
-      return azureWorkloadSAPHanaRestoreRequestUnionSerializer(
-        item as AzureWorkloadSAPHanaRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
-      return azureWorkloadSAPAsePointInTimeRestoreRequestSerializer(
-        item as AzureWorkloadSAPAsePointInTimeRestoreRequest,
-      );
-
-    case "AzureWorkloadSAPAseRestoreRequest":
-      return azureWorkloadSAPAseRestoreRequestUnionSerializer(
-        item as AzureWorkloadSAPAseRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSQLPointInTimeRestoreRequest":
-      return azureWorkloadSQLPointInTimeRestoreRequestUnionSerializer(
-        item as AzureWorkloadSQLPointInTimeRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSQLRestoreRequest":
-      return azureWorkloadSQLRestoreRequestUnionSerializer(
-        item as AzureWorkloadSQLRestoreRequestUnion,
-      );
-
     case "IaasVMRestoreRequest":
+    case "IaasVMRestoreWithRehydrationRequest":
       return iaasVMRestoreRequestUnionSerializer(
         item as IaasVMRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
-      return azureWorkloadSAPHanaRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSAPHanaRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSQLPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSQLRestoreWithRehydrateRequest":
-      return azureWorkloadSQLRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSQLRestoreWithRehydrateRequest,
-      );
-
-    case "IaasVMRestoreWithRehydrationRequest":
-      return iaasVMRestoreWithRehydrationRequestSerializer(
-        item as IaasVMRestoreWithRehydrationRequest,
       );
 
     default:
@@ -7657,7 +7450,19 @@ export function azureWorkloadPointInTimeRestoreRequestSerializer(
 export interface AzureWorkloadRestoreRequest extends RestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadPointInTimeRestoreRequest, AzureWorkloadSAPHanaPointInTimeRestoreRequest, AzureWorkloadSAPHanaRestoreRequest, AzureWorkloadSAPAsePointInTimeRestoreRequest, AzureWorkloadSAPAseRestoreRequest, AzureWorkloadSQLPointInTimeRestoreRequest, AzureWorkloadSQLRestoreRequest, AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest, AzureWorkloadSAPHanaRestoreWithRehydrateRequest, AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest, AzureWorkloadSQLRestoreWithRehydrateRequest */
-  objectType: "AzureWorkloadRestoreRequest";
+  objectType:
+    | "AzureWorkloadRestoreRequest"
+    | "AzureWorkloadPointInTimeRestoreRequest"
+    | "AzureWorkloadSAPHanaRestoreRequest"
+    | "AzureWorkloadSAPAseRestoreRequest"
+    | "AzureWorkloadSQLRestoreRequest"
+    | "AzureWorkloadSAPHanaPointInTimeRestoreRequest"
+    | "AzureWorkloadSAPHanaRestoreWithRehydrateRequest"
+    | "AzureWorkloadSAPAsePointInTimeRestoreRequest"
+    | "AzureWorkloadSQLPointInTimeRestoreRequest"
+    | "AzureWorkloadSQLRestoreWithRehydrateRequest"
+    | "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest"
+    | "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";
   /** Type of this recovery. */
   recoveryType?: RecoveryType;
   /** Fully qualified ARM ID of the VM on which workload that was running is being recovered. */
@@ -7722,16 +7527,9 @@ export function azureWorkloadRestoreRequestSerializer(
 /** Alias for AzureWorkloadRestoreRequestUnion */
 export type AzureWorkloadRestoreRequestUnion =
   | AzureWorkloadPointInTimeRestoreRequest
-  | AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion
   | AzureWorkloadSAPHanaRestoreRequestUnion
-  | AzureWorkloadSAPAsePointInTimeRestoreRequest
   | AzureWorkloadSAPAseRestoreRequestUnion
-  | AzureWorkloadSQLPointInTimeRestoreRequestUnion
   | AzureWorkloadSQLRestoreRequestUnion
-  | AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest
-  | AzureWorkloadSAPHanaRestoreWithRehydrateRequest
-  | AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest
-  | AzureWorkloadSQLRestoreWithRehydrateRequest
   | AzureWorkloadRestoreRequest;
 
 export function azureWorkloadRestoreRequestUnionSerializer(
@@ -7743,54 +7541,26 @@ export function azureWorkloadRestoreRequestUnionSerializer(
         item as AzureWorkloadPointInTimeRestoreRequest,
       );
 
-    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
-      return azureWorkloadSAPHanaPointInTimeRestoreRequestUnionSerializer(
-        item as AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion,
-      );
-
     case "AzureWorkloadSAPHanaRestoreRequest":
+    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
+    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
+    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
       return azureWorkloadSAPHanaRestoreRequestUnionSerializer(
         item as AzureWorkloadSAPHanaRestoreRequestUnion,
       );
 
-    case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
-      return azureWorkloadSAPAsePointInTimeRestoreRequestSerializer(
-        item as AzureWorkloadSAPAsePointInTimeRestoreRequest,
-      );
-
     case "AzureWorkloadSAPAseRestoreRequest":
+    case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
       return azureWorkloadSAPAseRestoreRequestUnionSerializer(
         item as AzureWorkloadSAPAseRestoreRequestUnion,
       );
 
-    case "AzureWorkloadSQLPointInTimeRestoreRequest":
-      return azureWorkloadSQLPointInTimeRestoreRequestUnionSerializer(
-        item as AzureWorkloadSQLPointInTimeRestoreRequestUnion,
-      );
-
     case "AzureWorkloadSQLRestoreRequest":
+    case "AzureWorkloadSQLPointInTimeRestoreRequest":
+    case "AzureWorkloadSQLRestoreWithRehydrateRequest":
+    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
       return azureWorkloadSQLRestoreRequestUnionSerializer(
         item as AzureWorkloadSQLRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
-      return azureWorkloadSAPHanaRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSAPHanaRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSQLPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest,
-      );
-
-    case "AzureWorkloadSQLRestoreWithRehydrateRequest":
-      return azureWorkloadSQLRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSQLRestoreWithRehydrateRequest,
       );
 
     default:
@@ -7951,7 +7721,9 @@ export interface AzureWorkloadSAPHanaPointInTimeRestoreRequest
   extends AzureWorkloadSAPHanaRestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest */
-  objectType: "AzureWorkloadSAPHanaPointInTimeRestoreRequest";
+  objectType:
+    | "AzureWorkloadSAPHanaPointInTimeRestoreRequest"
+    | "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest";
   /** PointInTime value */
   pointInTime?: Date;
 }
@@ -8102,7 +7874,11 @@ export interface AzureWorkloadSAPHanaRestoreRequest
   extends AzureWorkloadRestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSAPHanaPointInTimeRestoreRequest, AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest, AzureWorkloadSAPHanaRestoreWithRehydrateRequest */
-  objectType: "AzureWorkloadSAPHanaRestoreRequest";
+  objectType:
+    | "AzureWorkloadSAPHanaRestoreRequest"
+    | "AzureWorkloadSAPHanaPointInTimeRestoreRequest"
+    | "AzureWorkloadSAPHanaRestoreWithRehydrateRequest"
+    | "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest";
 }
 
 export function azureWorkloadSAPHanaRestoreRequestSerializer(
@@ -8140,7 +7916,6 @@ export function azureWorkloadSAPHanaRestoreRequestSerializer(
 /** Alias for AzureWorkloadSAPHanaRestoreRequestUnion */
 export type AzureWorkloadSAPHanaRestoreRequestUnion =
   | AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion
-  | AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest
   | AzureWorkloadSAPHanaRestoreWithRehydrateRequest
   | AzureWorkloadSAPHanaRestoreRequest;
 
@@ -8149,13 +7924,9 @@ export function azureWorkloadSAPHanaRestoreRequestUnionSerializer(
 ): any {
   switch (item.objectType) {
     case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
+    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
       return azureWorkloadSAPHanaPointInTimeRestoreRequestUnionSerializer(
         item as AzureWorkloadSAPHanaPointInTimeRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest,
       );
 
     case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
@@ -8263,7 +8034,9 @@ export interface AzureWorkloadSAPAseRestoreRequest
   extends AzureWorkloadRestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSAPAsePointInTimeRestoreRequest */
-  objectType: "AzureWorkloadSAPAseRestoreRequest";
+  objectType:
+    | "AzureWorkloadSAPAseRestoreRequest"
+    | "AzureWorkloadSAPAsePointInTimeRestoreRequest";
 }
 
 export function azureWorkloadSAPAseRestoreRequestSerializer(
@@ -8322,7 +8095,9 @@ export interface AzureWorkloadSQLPointInTimeRestoreRequest
   extends AzureWorkloadSQLRestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest */
-  objectType: "AzureWorkloadSQLPointInTimeRestoreRequest";
+  objectType:
+    | "AzureWorkloadSQLPointInTimeRestoreRequest"
+    | "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";
   /** PointInTime value */
   pointInTime?: Date;
 }
@@ -8445,7 +8220,11 @@ export interface AzureWorkloadSQLRestoreRequest
   extends AzureWorkloadRestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: AzureWorkloadSQLPointInTimeRestoreRequest, AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest, AzureWorkloadSQLRestoreWithRehydrateRequest */
-  objectType: "AzureWorkloadSQLRestoreRequest";
+  objectType:
+    | "AzureWorkloadSQLRestoreRequest"
+    | "AzureWorkloadSQLPointInTimeRestoreRequest"
+    | "AzureWorkloadSQLRestoreWithRehydrateRequest"
+    | "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";
   /** Default option set to true. If this is set to false, alternate data directory must be provided */
   shouldUseAlternateTargetLocation?: boolean;
   /** SQL specific property where user can chose to set no-recovery when restore operation is tried */
@@ -8494,7 +8273,6 @@ export function azureWorkloadSQLRestoreRequestSerializer(
 /** Alias for AzureWorkloadSQLRestoreRequestUnion */
 export type AzureWorkloadSQLRestoreRequestUnion =
   | AzureWorkloadSQLPointInTimeRestoreRequestUnion
-  | AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest
   | AzureWorkloadSQLRestoreWithRehydrateRequest
   | AzureWorkloadSQLRestoreRequest;
 
@@ -8503,13 +8281,9 @@ export function azureWorkloadSQLRestoreRequestUnionSerializer(
 ): any {
   switch (item.objectType) {
     case "AzureWorkloadSQLPointInTimeRestoreRequest":
+    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
       return azureWorkloadSQLPointInTimeRestoreRequestUnionSerializer(
         item as AzureWorkloadSQLPointInTimeRestoreRequestUnion,
-      );
-
-    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
-      return azureWorkloadSQLPointInTimeRestoreWithRehydrateRequestSerializer(
-        item as AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest,
       );
 
     case "AzureWorkloadSQLRestoreWithRehydrateRequest":
@@ -8608,7 +8382,7 @@ export function azureWorkloadSQLRestoreWithRehydrateRequestSerializer(
 export interface IaasVMRestoreRequest extends RestoreRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: IaasVMRestoreWithRehydrationRequest */
-  objectType: "IaasVMRestoreRequest";
+  objectType: "IaasVMRestoreRequest" | "IaasVMRestoreWithRehydrationRequest";
   /** ID of the backup copy to be recovered. */
   recoveryPointId?: string;
   /** Type of this recovery. */
@@ -12733,8 +12507,6 @@ export type ProtectionIntentUnion =
   | AzureRecoveryServiceVaultProtectionIntentUnion
   | AzureResourceProtectionIntent
   | AzureWorkloadContainerAutoProtectionIntent
-  | AzureWorkloadAutoProtectionIntentUnion
-  | AzureWorkloadSQLAutoProtectionIntent
   | ProtectionIntent;
 
 export function protectionIntentUnionSerializer(
@@ -12742,6 +12514,8 @@ export function protectionIntentUnionSerializer(
 ): any {
   switch (item.protectionIntentItemType) {
     case "RecoveryServiceVaultItem":
+    case "AzureWorkloadAutoProtectionIntent":
+    case "AzureWorkloadSQLAutoProtectionIntent":
       return azureRecoveryServiceVaultProtectionIntentUnionSerializer(
         item as AzureRecoveryServiceVaultProtectionIntentUnion,
       );
@@ -12756,16 +12530,6 @@ export function protectionIntentUnionSerializer(
         item as AzureWorkloadContainerAutoProtectionIntent,
       );
 
-    case "AzureWorkloadAutoProtectionIntent":
-      return azureWorkloadAutoProtectionIntentUnionSerializer(
-        item as AzureWorkloadAutoProtectionIntentUnion,
-      );
-
-    case "AzureWorkloadSQLAutoProtectionIntent":
-      return azureWorkloadSQLAutoProtectionIntentSerializer(
-        item as AzureWorkloadSQLAutoProtectionIntent,
-      );
-
     default:
       return protectionIntentSerializer(item);
   }
@@ -12776,6 +12540,8 @@ export function protectionIntentUnionDeserializer(
 ): ProtectionIntentUnion {
   switch (item.protectionIntentItemType) {
     case "RecoveryServiceVaultItem":
+    case "AzureWorkloadAutoProtectionIntent":
+    case "AzureWorkloadSQLAutoProtectionIntent":
       return azureRecoveryServiceVaultProtectionIntentUnionDeserializer(
         item as AzureRecoveryServiceVaultProtectionIntentUnion,
       );
@@ -12788,16 +12554,6 @@ export function protectionIntentUnionDeserializer(
     case "AzureWorkloadContainerAutoProtectionIntent":
       return azureWorkloadContainerAutoProtectionIntentDeserializer(
         item as AzureWorkloadContainerAutoProtectionIntent,
-      );
-
-    case "AzureWorkloadAutoProtectionIntent":
-      return azureWorkloadAutoProtectionIntentUnionDeserializer(
-        item as AzureWorkloadAutoProtectionIntentUnion,
-      );
-
-    case "AzureWorkloadSQLAutoProtectionIntent":
-      return azureWorkloadSQLAutoProtectionIntentDeserializer(
-        item as AzureWorkloadSQLAutoProtectionIntent,
       );
 
     default:
@@ -12840,7 +12596,10 @@ export interface AzureRecoveryServiceVaultProtectionIntent
   extends ProtectionIntent {
   /** backup protectionIntent type. */
   /** The discriminator possible values: AzureWorkloadAutoProtectionIntent, AzureWorkloadSQLAutoProtectionIntent */
-  protectionIntentItemType: "RecoveryServiceVaultItem";
+  protectionIntentItemType:
+    | "RecoveryServiceVaultItem"
+    | "AzureWorkloadAutoProtectionIntent"
+    | "AzureWorkloadSQLAutoProtectionIntent";
 }
 
 export function azureRecoveryServiceVaultProtectionIntentSerializer(
@@ -12872,7 +12631,6 @@ export function azureRecoveryServiceVaultProtectionIntentDeserializer(
 /** Alias for AzureRecoveryServiceVaultProtectionIntentUnion */
 export type AzureRecoveryServiceVaultProtectionIntentUnion =
   | AzureWorkloadAutoProtectionIntentUnion
-  | AzureWorkloadSQLAutoProtectionIntent
   | AzureRecoveryServiceVaultProtectionIntent;
 
 export function azureRecoveryServiceVaultProtectionIntentUnionSerializer(
@@ -12880,13 +12638,9 @@ export function azureRecoveryServiceVaultProtectionIntentUnionSerializer(
 ): any {
   switch (item.protectionIntentItemType) {
     case "AzureWorkloadAutoProtectionIntent":
+    case "AzureWorkloadSQLAutoProtectionIntent":
       return azureWorkloadAutoProtectionIntentUnionSerializer(
         item as AzureWorkloadAutoProtectionIntentUnion,
-      );
-
-    case "AzureWorkloadSQLAutoProtectionIntent":
-      return azureWorkloadSQLAutoProtectionIntentSerializer(
-        item as AzureWorkloadSQLAutoProtectionIntent,
       );
 
     default:
@@ -12899,13 +12653,9 @@ export function azureRecoveryServiceVaultProtectionIntentUnionDeserializer(
 ): AzureRecoveryServiceVaultProtectionIntentUnion {
   switch (item.protectionIntentItemType) {
     case "AzureWorkloadAutoProtectionIntent":
+    case "AzureWorkloadSQLAutoProtectionIntent":
       return azureWorkloadAutoProtectionIntentUnionDeserializer(
         item as AzureWorkloadAutoProtectionIntentUnion,
-      );
-
-    case "AzureWorkloadSQLAutoProtectionIntent":
-      return azureWorkloadSQLAutoProtectionIntentDeserializer(
-        item as AzureWorkloadSQLAutoProtectionIntent,
       );
 
     default:
@@ -12918,7 +12668,9 @@ export interface AzureWorkloadAutoProtectionIntent
   extends AzureRecoveryServiceVaultProtectionIntent {
   /** backup protectionIntent type. */
   /** The discriminator possible values: AzureWorkloadSQLAutoProtectionIntent */
-  protectionIntentItemType: "AzureWorkloadAutoProtectionIntent";
+  protectionIntentItemType:
+    | "AzureWorkloadAutoProtectionIntent"
+    | "AzureWorkloadSQLAutoProtectionIntent";
 }
 
 export function azureWorkloadAutoProtectionIntentSerializer(
@@ -13288,7 +13040,6 @@ export function validateOperationRequestSerializer(
 
 /** Alias for ValidateOperationRequestUnion */
 export type ValidateOperationRequestUnion =
-  | ValidateIaasVMRestoreOperationRequest
   | ValidateRestoreOperationRequestUnion
   | ValidateOperationRequest;
 
@@ -13296,12 +13047,8 @@ export function validateOperationRequestUnionSerializer(
   item: ValidateOperationRequestUnion,
 ): any {
   switch (item.objectType) {
-    case "ValidateIaasVMRestoreOperationRequest":
-      return validateIaasVMRestoreOperationRequestSerializer(
-        item as ValidateIaasVMRestoreOperationRequest,
-      );
-
     case "ValidateRestoreOperationRequest":
+    case "ValidateIaasVMRestoreOperationRequest":
       return validateRestoreOperationRequestUnionSerializer(
         item as ValidateRestoreOperationRequestUnion,
       );
@@ -13334,7 +13081,9 @@ export interface ValidateRestoreOperationRequest
   extends ValidateOperationRequest {
   /** This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. */
   /** The discriminator possible values: ValidateIaasVMRestoreOperationRequest */
-  objectType: "ValidateRestoreOperationRequest";
+  objectType:
+    | "ValidateRestoreOperationRequest"
+    | "ValidateIaasVMRestoreOperationRequest";
   /** Sets restore request to be validated */
   restoreRequest?: RestoreRequestUnion;
 }
@@ -13630,19 +13379,8 @@ export function workloadProtectableItemDeserializer(
 /** Alias for WorkloadProtectableItemUnion */
 export type WorkloadProtectableItemUnion =
   | AzureFileShareProtectableItem
-  | AzureIaaSClassicComputeVMProtectableItem
   | IaaSVMProtectableItemUnion
-  | AzureIaaSComputeVMProtectableItem
   | AzureVmWorkloadProtectableItemUnion
-  | AzureVmWorkloadSAPAseDatabaseProtectableItem
-  | AzureVmWorkloadSAPAseSystemProtectableItem
-  | AzureVmWorkloadSAPHanaDatabaseProtectableItem
-  | AzureVmWorkloadSAPHanaSystemProtectableItem
-  | AzureVmWorkloadSAPHanaDBInstance
-  | AzureVmWorkloadSAPHanaHSRProtectableItem
-  | AzureVmWorkloadSQLAvailabilityGroupProtectableItem
-  | AzureVmWorkloadSQLDatabaseProtectableItem
-  | AzureVmWorkloadSQLInstanceProtectableItem
   | WorkloadProtectableItem;
 
 export function workloadProtectableItemUnionDeserializer(
@@ -13654,69 +13392,25 @@ export function workloadProtectableItemUnionDeserializer(
         item as AzureFileShareProtectableItem,
       );
 
-    case "Microsoft.ClassicCompute/virtualMachines":
-      return azureIaaSClassicComputeVMProtectableItemDeserializer(
-        item as AzureIaaSClassicComputeVMProtectableItem,
-      );
-
     case "IaaSVMProtectableItem":
+    case "Microsoft.ClassicCompute/virtualMachines":
+    case "Microsoft.Compute/virtualMachines":
       return iaaSVMProtectableItemUnionDeserializer(
         item as IaaSVMProtectableItemUnion,
       );
 
-    case "Microsoft.Compute/virtualMachines":
-      return azureIaaSComputeVMProtectableItemDeserializer(
-        item as AzureIaaSComputeVMProtectableItem,
-      );
-
     case "AzureVmWorkloadProtectableItem":
+    case "SAPAseDatabase":
+    case "SAPAseSystem":
+    case "SAPHanaDatabase":
+    case "SAPHanaSystem":
+    case "SAPHanaDBInstance":
+    case "HanaHSRContainer":
+    case "SQLAvailabilityGroupContainer":
+    case "SQLDataBase":
+    case "SQLInstance":
       return azureVmWorkloadProtectableItemUnionDeserializer(
         item as AzureVmWorkloadProtectableItemUnion,
-      );
-
-    case "SAPAseDatabase":
-      return azureVmWorkloadSAPAseDatabaseProtectableItemDeserializer(
-        item as AzureVmWorkloadSAPAseDatabaseProtectableItem,
-      );
-
-    case "SAPAseSystem":
-      return azureVmWorkloadSAPAseSystemProtectableItemDeserializer(
-        item as AzureVmWorkloadSAPAseSystemProtectableItem,
-      );
-
-    case "SAPHanaDatabase":
-      return azureVmWorkloadSAPHanaDatabaseProtectableItemDeserializer(
-        item as AzureVmWorkloadSAPHanaDatabaseProtectableItem,
-      );
-
-    case "SAPHanaSystem":
-      return azureVmWorkloadSAPHanaSystemProtectableItemDeserializer(
-        item as AzureVmWorkloadSAPHanaSystemProtectableItem,
-      );
-
-    case "SAPHanaDBInstance":
-      return azureVmWorkloadSAPHanaDBInstanceDeserializer(
-        item as AzureVmWorkloadSAPHanaDBInstance,
-      );
-
-    case "HanaHSRContainer":
-      return azureVmWorkloadSAPHanaHSRProtectableItemDeserializer(
-        item as AzureVmWorkloadSAPHanaHSRProtectableItem,
-      );
-
-    case "SQLAvailabilityGroupContainer":
-      return azureVmWorkloadSQLAvailabilityGroupProtectableItemDeserializer(
-        item as AzureVmWorkloadSQLAvailabilityGroupProtectableItem,
-      );
-
-    case "SQLDataBase":
-      return azureVmWorkloadSQLDatabaseProtectableItemDeserializer(
-        item as AzureVmWorkloadSQLDatabaseProtectableItem,
-      );
-
-    case "SQLInstance":
-      return azureVmWorkloadSQLInstanceProtectableItemDeserializer(
-        item as AzureVmWorkloadSQLInstanceProtectableItem,
       );
 
     default:
@@ -13798,7 +13492,10 @@ export function azureIaaSClassicComputeVMProtectableItemDeserializer(
 export interface IaaSVMProtectableItem extends WorkloadProtectableItem {
   /** Type of the backup item. */
   /** The discriminator possible values: Microsoft.ClassicCompute/virtualMachines, Microsoft.Compute/virtualMachines */
-  protectableItemType: "IaaSVMProtectableItem";
+  protectableItemType:
+    | "IaaSVMProtectableItem"
+    | "Microsoft.ClassicCompute/virtualMachines"
+    | "Microsoft.Compute/virtualMachines";
   /** Fully qualified ARM ID of the virtual machine. */
   virtualMachineId?: string;
   /** Specifies whether the container represents a Classic or an Azure Resource Manager VM. */
@@ -13874,7 +13571,17 @@ export interface AzureVmWorkloadProtectableItem
   extends WorkloadProtectableItem {
   /** Type of the backup item. */
   /** The discriminator possible values: SAPAseDatabase, SAPAseSystem, SAPHanaDatabase, SAPHanaSystem, SAPHanaDBInstance, HanaHSRContainer, SQLAvailabilityGroupContainer, SQLDataBase, SQLInstance */
-  protectableItemType: "AzureVmWorkloadProtectableItem";
+  protectableItemType:
+    | "AzureVmWorkloadProtectableItem"
+    | "SAPAseDatabase"
+    | "SAPAseSystem"
+    | "SAPHanaDatabase"
+    | "SAPHanaSystem"
+    | "SAPHanaDBInstance"
+    | "HanaHSRContainer"
+    | "SQLAvailabilityGroupContainer"
+    | "SQLDataBase"
+    | "SQLInstance";
   /** Name for instance or AG */
   parentName?: string;
   /**
