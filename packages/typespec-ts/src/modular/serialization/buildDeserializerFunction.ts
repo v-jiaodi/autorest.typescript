@@ -221,12 +221,12 @@ function buildDiscriminatedUnionDeserializer(
     return resolveReference(refkey(type, "deserializer"));
   }
   // Get the base deserializer name and ensure reference tracking
-  const baseDeserializerName = `${normalizeModelName(
+  const baseDeserializerName = buildModelDeserializer(
     context,
     type,
-    NameType.Operation,
+    true,
     true
-  )}Deserializer`;
+  ) as string;
   const directSubtypes = getDirectSubtypes(type);
   for (const subType of directSubtypes) {
     if (

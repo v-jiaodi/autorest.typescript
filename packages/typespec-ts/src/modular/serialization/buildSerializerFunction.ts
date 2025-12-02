@@ -228,12 +228,12 @@ function buildDiscriminatedUnionSerializer(
     return resolveReference(refkey(type, "serializer"));
   }
   // Get the base serializer name and ensure reference tracking
-  const baseSerializerName = `${normalizeModelName(
+  const baseSerializerName = buildModelSerializer(
     context,
     type,
-    NameType.Operation,
+    true,
     true
-  )}Serializer`
+  ) as string;
   const directSubtypes = getDirectSubtypes(type);
   for (const subType of directSubtypes) {
     if (

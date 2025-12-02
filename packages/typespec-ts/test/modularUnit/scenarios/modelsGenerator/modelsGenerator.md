@@ -1657,7 +1657,7 @@ export async function read(
 }
 ```
 
-# should handle inheritance model with discriminator in operations
+# only: should handle inheritance model with discriminator in operations
 
 ## TypeSpec
 
