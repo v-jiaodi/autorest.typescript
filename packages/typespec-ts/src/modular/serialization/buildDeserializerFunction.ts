@@ -220,7 +220,8 @@ function buildDiscriminatedUnionDeserializer(
   if (nameOnly) {
     return resolveReference(refkey(type, "deserializer"));
   }
-  // Get the base deserializer name and ensure reference tracking
+  // Get the base deserializer name by calling buildModelDeserializer recursively
+  // This will return a placeholder that references the already-registered base deserializer
   const baseDeserializerName = buildModelDeserializer(
     context,
     type,
@@ -353,7 +354,10 @@ function buildModelTypeDeserializer(
     options.skipDiscriminatedUnionSuffix
   )}Deserializer`;
   if (options.nameOnly) {
-    return resolveReference(refkey(type, "deserializer"));
+    // Use different refkey for base union deserializer vs union deserializer
+    // to avoid conflicts when the same type needs both
+    const refkeySuffix = options.skipDiscriminatedUnionSuffix ? "baseUnionDeserializer" : "deserializer";
+    return resolveReference(refkey(type, refkeySuffix));
   }
   const deserializerFunction: FunctionDeclarationStructure = {
     kind: StructureKind.Function,

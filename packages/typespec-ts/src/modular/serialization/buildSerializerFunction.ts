@@ -227,7 +227,8 @@ function buildDiscriminatedUnionSerializer(
   if (nameOnly) {
     return resolveReference(refkey(type, "serializer"));
   }
-  // Get the base serializer name and ensure reference tracking
+  // Get the base serializer name by calling buildModelSerializer recursively
+  // This will return a placeholder that references the already-registered base serializer
   const baseSerializerName = buildModelSerializer(
     context,
     type,
@@ -360,7 +361,10 @@ function buildModelTypeSerializer(
     options.skipDiscriminatedUnionSuffix
   )}Serializer`;
   if (options.nameOnly) {
-    return resolveReference(refkey(type, "serializer"));
+    // Use different refkey for base union serializer vs union serializer
+    // to avoid conflicts when the same type needs both
+    const refkeySuffix = options.skipDiscriminatedUnionSuffix ? "baseUnionSerializer" : "serializer";
+    return resolveReference(refkey(type, refkeySuffix));
   }
   const serializerFunction: FunctionDeclarationStructure = {
     kind: StructureKind.Function,

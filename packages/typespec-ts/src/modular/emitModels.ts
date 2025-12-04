@@ -320,8 +320,16 @@ function addSerializationFunctions(
     skipDiscriminatedUnion
   );
 
-  const serializerRefkey = refkey(type, "serializer");
-  const deserailizerRefKey = refkey(type, "deserializer");
+  // Use different refkey based on whether this is a base serializer or union serializer
+  const serializerRefkey = refkey(
+    type,
+    skipDiscriminatedUnion ? "baseUnionSerializer" : "serializer"
+  );
+  const deserailizerRefKey = refkey(
+    type,
+    skipDiscriminatedUnion ? "baseUnionDeserializer" : "deserializer"
+  );
+  
   if (
     serializationFunction &&
     typeof serializationFunction !== "string" &&
