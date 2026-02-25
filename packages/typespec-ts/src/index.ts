@@ -17,7 +17,9 @@ import {
   PagingHelpers,
   PollingHelpers,
   SerializationHelpers,
-  UrlTemplateHelpers
+  SimplePollerHelpers,
+  UrlTemplateHelpers,
+  XmlHelpers
 } from "./modular/static-helpers-metadata.js";
 import {
   RLCModel,
@@ -80,6 +82,7 @@ import { buildRestorePoller } from "./modular/buildRestorePoller.js";
 import { buildSubpathIndexFile } from "./modular/buildSubpathIndex.js";
 import {
   createSdkContext,
+  listAllServiceNamespaces,
   SdkClientType,
   SdkServiceOperation
 } from "@azure-tools/typespec-client-generator-core";
@@ -88,9 +91,14 @@ import { emitLoggerFile } from "./modular/emitLoggerFile.js";
 import { emitTypes } from "./modular/emitModels.js";
 import { existsSync } from "fs";
 import { getModuleExports } from "./modular/buildProjectFiles.js";
-import { getClientHierarchyMap, getRLCClients } from "./utils/clientUtils.js";
+import {
+  getClientHierarchyMap,
+  getRLCClients,
+  getModularClientOptions
+} from "./utils/clientUtils.js";
 import { join } from "path";
 import { loadStaticHelpers } from "./framework/load-static-helpers.js";
+import { packageUsesXmlSerialization } from "./modular/serialization/buildXmlSerializerFunction.js";
 import { provideBinder } from "./framework/hooks/binder.js";
 import { provideSdkTypes } from "./framework/hooks/sdkTypes.js";
 import { transformRLCModel } from "./transform/transform.js";
@@ -131,9 +139,11 @@ export async function $onEmit(context: EmitContext) {
       ...SerializationHelpers,
       ...PagingHelpers,
       ...PollingHelpers,
+      ...SimplePollerHelpers,
       ...UrlTemplateHelpers,
       ...MultipartHelpers,
-      ...CloudSettingHelpers
+      ...CloudSettingHelpers,
+      ...XmlHelpers
     },
     {
       sourcesDir: dpgContext.generationPathDetail?.modularSourcesDir,
@@ -187,6 +197,7 @@ export async function $onEmit(context: EmitContext) {
     const generationPathDetail: GenerationDirDetail =
       await calculateGenerationDir();
     dpgContext.generationPathDetail = generationPathDetail;
+    dpgContext.allServiceNamespaces = listAllServiceNamespaces(dpgContext);
     const options: RLCOptions = transformRLCOptions(emitterOptions, dpgContext);
     emitterOptions["is-modular-library"] = options.isModularLibrary;
     emitterOptions["generate-sample"] = options.generateSample;
@@ -256,7 +267,8 @@ export async function $onEmit(context: EmitContext) {
     for (const client of clients) {
       const rlcModels = await transformRLCModel(client, dpgContext);
       rlcCodeModels.push(rlcModels);
-      serviceNameToRlcModelsMap.set(client.service.name, rlcModels);
+      const serviceName = client.services[0]?.name ?? "Unknown";
+      serviceNameToRlcModelsMap.set(serviceName, rlcModels);
       needUnexpectedHelper.set(
         getClientName(rlcModels),
         hasUnexpectedHelper(rlcModels)
@@ -309,7 +321,6 @@ export async function $onEmit(context: EmitContext) {
       }
     );
 
-    const isMultiClients = dpgContext.sdkPackage.clients.length > 1;
     emitTypes(dpgContext, { sourceRoot: modularSourcesRoot });
     buildSubpathIndexFile(modularEmitterOptions, "models", undefined, {
       recursive: true
@@ -343,7 +354,9 @@ export async function $onEmit(context: EmitContext) {
         exportIndex: true,
         interfaceOnly: true
       });
-      if (isMultiClients) {
+      const { subfolder } = getModularClientOptions(subClient);
+      // Generate index file for clients with subfolders (multi-client scenarios and nested clients)
+      if (subfolder) {
         buildSubClientIndexFile(dpgContext, subClient, modularEmitterOptions);
       }
       buildRootIndex(
@@ -387,14 +400,16 @@ export async function $onEmit(context: EmitContext) {
   }
 
   function buildMetadataJson() {
-    const apiVersion = dpgContext.sdkPackage.metadata.apiVersion;
+    const apiVersions = dpgContext.sdkPackage.metadata.apiVersions;
     const emitterVersion = getTypespecTsVersion(context);
-    if (apiVersion === undefined && emitterVersion === undefined) {
+    if (apiVersions === undefined && emitterVersion === undefined) {
       return;
     }
     const content: Metadata = {};
-    if (apiVersion !== undefined) {
-      content.apiVersion = apiVersion;
+    if (apiVersions !== undefined && apiVersions.size > 0) {
+      // Use the first/latest API version if multiple are available
+      const firstVersion = Array.from(apiVersions.values())[0];
+      content.apiVersion = firstVersion;
     }
     if (emitterVersion !== undefined) {
       content.emitterVersion = emitterVersion;
@@ -474,16 +489,28 @@ export async function $onEmit(context: EmitContext) {
         modularPackageInfo = {
           exports: getModuleExports(context, modularEmitterOptions)
         };
+        // Build dependencies
+        const dependencies: Record<string, string> = {};
+        if (isAzureFlavor) {
+          dependencies["@azure/core-util"] = "^1.9.2";
+        }
+        // Add fast-xml-parser if XML serialization is used
+        if (packageUsesXmlSerialization(dpgContext.sdkPackage)) {
+          dependencies["fast-xml-parser"] = "^4.5.0";
+        }
         if (isAzureFlavor) {
           modularPackageInfo = {
             ...modularPackageInfo,
-            dependencies: {
-              "@azure/core-util": "^1.9.2"
-            },
+            dependencies,
             clientContextPaths: getRelativeContextPaths(
               context,
               modularEmitterOptions
             )
+          };
+        } else if (Object.keys(dependencies).length > 0) {
+          modularPackageInfo = {
+            ...modularPackageInfo,
+            dependencies
           };
         }
       }

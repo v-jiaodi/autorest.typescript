@@ -19,5 +19,4 @@ export interface CreateEntryOptionalParams extends OperationOptions {}
 export interface GetPublicKeysOptionalParams extends OperationOptions {}
 
 /** Optional parameters. */
-export interface GetTransparencyConfigCborOptionalParams
-  extends OperationOptions {}
+export interface GetTransparencyConfigCborOptionalParams extends OperationOptions {}

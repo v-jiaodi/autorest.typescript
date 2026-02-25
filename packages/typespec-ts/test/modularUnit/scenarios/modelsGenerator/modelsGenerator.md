@@ -368,9 +368,7 @@ export function _createStreamingSend(
     });
 }
 
-export async function _createStreamingDeserialize(
-  result: PathUncheckedResponse,
-): Promise<void> {
+export async function _createStreamingDeserialize(result: PathUncheckedResponse): Promise<void> {
   const expectedStatuses = ["204"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -413,7 +411,7 @@ op read(@body body: Foo): { @body body: Foo };
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /** model interface Foo */
 export interface Foo {
-  prop1: string;
+  prop1: Date;
   prop2: string;
   prop3: Date;
   prop4: string;
@@ -425,7 +423,7 @@ export interface Foo {
 ```ts models function fooSerializer
 export function fooSerializer(item: Foo): any {
   return {
-    prop1: item["prop1"],
+    prop1: item["prop1"].toISOString().split("T")[0],
     prop2: item["prop2"],
     prop3: item["prop3"].toISOString(),
     prop4: item["prop4"],
@@ -438,7 +436,7 @@ export function fooSerializer(item: Foo): any {
 ```ts models function fooDeserializer
 export function fooDeserializer(item: any): Foo {
   return {
-    prop1: item["prop1"],
+    prop1: new Date(item["prop1"]),
     prop2: item["prop2"],
     prop3: new Date(item["prop3"]),
     prop4: item["prop4"],
@@ -469,17 +467,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -531,9 +524,7 @@ export function _readSend(
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<void> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<void> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -613,17 +604,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -703,17 +689,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -790,17 +771,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -868,17 +844,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -947,17 +918,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1029,17 +995,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1128,17 +1089,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1228,17 +1184,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1328,17 +1279,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: fooSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1516,16 +1462,11 @@ export function _readSend(
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Cat> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Cat> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1630,16 +1571,11 @@ export function _readSend(
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Cat> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Cat> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1695,12 +1631,7 @@ export interface PSDog extends Pet {
 }
 
 export function psDogSerializer(item: PSDog): any {
-  return {
-    kind: item["kind"],
-    name: item["name"],
-    weight: item["weight"],
-    bark: item["bark"],
-  };
+  return { kind: item["kind"], name: item["name"], weight: item["weight"], bark: item["bark"] };
 }
 
 export function psDogDeserializer(item: any): PSDog {
@@ -1745,7 +1676,7 @@ export function petUnionSerializer(item: PetUnion): any {
 }
 
 export function petUnionDeserializer(item: any): PetUnion {
-  switch (item.kind) {
+  switch (item["kind"]) {
     case "dog":
       return psDogDeserializer(item as PSDog);
 
@@ -1778,17 +1709,12 @@ export function _readSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/json",
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
       body: psDogSerializer(body),
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<PSDog> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<PSDog> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -1857,7 +1783,7 @@ export function petDeserializer(item: any): Pet {
 export type PetUnion = Cat | Dog | Pet;
 
 export function petUnionDeserializer(item: any): PetUnion {
-  switch (item.kind) {
+  switch (item["kind"]) {
     case "cat":
       return catDeserializer(item as Cat);
 
@@ -1921,16 +1847,11 @@ export function _readSend(
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<PetUnion> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<PetUnion> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -2004,7 +1925,7 @@ export function petDeserializer(item: any): Pet {
 export type PetUnion = Cat | DogUnion | Pet;
 
 export function petUnionDeserializer(item: any): PetUnion {
-  switch (item.kind) {
+  switch (item["kind"]) {
     case "cat":
       return catDeserializer(item as Cat);
 
@@ -2052,7 +1973,7 @@ export function dogDeserializer(item: any): Dog {
 export type DogUnion = Gold | Dog;
 
 export function dogUnionDeserializer(item: any): DogUnion {
-  switch (item.type) {
+  switch (item["type"]) {
     case "gold":
       return goldDeserializer(item as Gold);
 
@@ -2106,16 +2027,11 @@ export function _readSend(
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<PetUnion> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<PetUnion> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -2206,16 +2122,11 @@ export function _readSend(
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
-export async function _readDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Foo> {
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Foo> {
   const expectedStatuses = ["200"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -2315,9 +2226,7 @@ export function _getSend(
     });
 }
 
-export async function _getDeserialize(
-  result: PathUncheckedResponse,
-): Promise<void> {
+export async function _getDeserialize(result: PathUncheckedResponse): Promise<void> {
   const expectedStatuses = ["204"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -2451,17 +2360,12 @@ export function _getSend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "text/plain",
-      headers: {
-        "test-header": testHeader,
-        ...options.requestOptions?.headers,
-      },
+      headers: { "test-header": testHeader, ...options.requestOptions?.headers },
       body: body,
     });
 }
 
-export async function _getDeserialize(
-  result: PathUncheckedResponse,
-): Promise<void> {
+export async function _getDeserialize(result: PathUncheckedResponse): Promise<void> {
   const expectedStatuses = ["204"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -2750,9 +2654,7 @@ export function vegetablesDeserializer(item: any): Vegetables {
 /** Alias for _VegetablesAdditionalProperty */
 export type _VegetablesAdditionalProperty = number | string;
 
-export function _vegetablesAdditionalPropertySerializer(
-  item: _VegetablesAdditionalProperty,
-): any {
+export function _vegetablesAdditionalPropertySerializer(item: _VegetablesAdditionalProperty): any {
   return item;
 }
 
@@ -2821,5 +2723,234 @@ export interface Base {
 ```ts models function baseSerializer
 export function baseSerializer(item: Base): any {
   return { foo: item["foo"] };
+}
+```
+
+# should handle discriminator base model without subtypes
+
+## TypeSpec
+
+```tsp
+@discriminator("kind")
+model Pet {
+    kind: string;
+    name: string;
+    weight?: float32;
+}
+
+@discriminator("type")
+model ServicePlacementPolicyDescription extends Pet {
+  kind: "dog";
+  type: string;
+}
+
+model ServiceResourceProperties {
+  servicePlacementPolicies?: ServicePlacementPolicyDescription[];
+}
+
+#suppress "@azure-tools/typespec-azure-core/use-standard-operations" "for test"
+@route("/services")
+@post
+op createService(@body body: ServiceResourceProperties): ServiceResourceProperties;
+```
+
+## Models
+
+```ts models
+/**
+ * This file contains only generated model types and their (de)serializers.
+ * Disable the following rules for internal models with '_' prefix and deserializers which require 'any' for raw JSON input.
+ */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/** model interface ServiceResourceProperties */
+export interface ServiceResourceProperties {
+  servicePlacementPolicies?: ServicePlacementPolicyDescription[];
+}
+
+export function serviceResourcePropertiesSerializer(item: ServiceResourceProperties): any {
+  return {
+    servicePlacementPolicies: !item["servicePlacementPolicies"]
+      ? item["servicePlacementPolicies"]
+      : servicePlacementPolicyDescriptionArraySerializer(item["servicePlacementPolicies"]),
+  };
+}
+
+export function serviceResourcePropertiesDeserializer(item: any): ServiceResourceProperties {
+  return {
+    servicePlacementPolicies: !item["servicePlacementPolicies"]
+      ? item["servicePlacementPolicies"]
+      : servicePlacementPolicyDescriptionArrayDeserializer(item["servicePlacementPolicies"]),
+  };
+}
+
+export function servicePlacementPolicyDescriptionArraySerializer(
+  result: Array<ServicePlacementPolicyDescription>,
+): any[] {
+  return result.map((item) => {
+    return servicePlacementPolicyDescriptionSerializer(item);
+  });
+}
+
+export function servicePlacementPolicyDescriptionArrayDeserializer(
+  result: Array<ServicePlacementPolicyDescription>,
+): any[] {
+  return result.map((item) => {
+    return servicePlacementPolicyDescriptionDeserializer(item);
+  });
+}
+
+/** model interface ServicePlacementPolicyDescription */
+export interface ServicePlacementPolicyDescription extends Pet {
+  kind: "dog";
+  type: string;
+}
+
+export function servicePlacementPolicyDescriptionSerializer(
+  item: ServicePlacementPolicyDescription,
+): any {
+  return { kind: item["kind"], name: item["name"], weight: item["weight"], type: item["type"] };
+}
+
+export function servicePlacementPolicyDescriptionDeserializer(
+  item: any,
+): ServicePlacementPolicyDescription {
+  return {
+    kind: item["kind"],
+    name: item["name"],
+    weight: item["weight"],
+    type: item["type"],
+  };
+}
+
+/** model interface Pet */
+export interface Pet {
+  kind: string;
+  name: string;
+  weight?: number;
+}
+
+export function petSerializer(item: Pet): any {
+  return { kind: item["kind"], name: item["name"], weight: item["weight"] };
+}
+
+export function petDeserializer(item: any): Pet {
+  return {
+    kind: item["kind"],
+    name: item["name"],
+    weight: item["weight"],
+  };
+}
+
+/** Alias for PetUnion */
+export type PetUnion = ServicePlacementPolicyDescription | Pet;
+
+export function petUnionSerializer(item: PetUnion): any {
+  switch (item.kind) {
+    case "dog":
+      return servicePlacementPolicyDescriptionSerializer(item as ServicePlacementPolicyDescription);
+
+    default:
+      return petSerializer(item);
+  }
+}
+
+export function petUnionDeserializer(item: any): PetUnion {
+  switch (item["kind"]) {
+    case "dog":
+      return servicePlacementPolicyDescriptionDeserializer(
+        item as ServicePlacementPolicyDescription,
+      );
+
+    default:
+      return petDeserializer(item);
+  }
+}
+```
+
+# should handle duplicate model name import between hardcode import and binder import
+
+## TypeSpec
+
+```tsp
+model Client {
+  id: string;
+  email: string;
+}
+
+op read(@body body: Client): Client;
+```
+
+## Models
+
+```ts models
+/**
+ * This file contains only generated model types and their (de)serializers.
+ * Disable the following rules for internal models with '_' prefix and deserializers which require 'any' for raw JSON input.
+ */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/** model interface Client */
+export interface Client {
+  id: string;
+  email: string;
+}
+
+export function clientSerializer(item: Client): any {
+  return { id: item["id"], email: item["email"] };
+}
+
+export function clientDeserializer(item: any): Client {
+  return {
+    id: item["id"],
+    email: item["email"],
+  };
+}
+```
+
+## Operations
+
+```ts operations
+import { TestingContext as Client } from "./index.js";
+import { Client as Client_1, clientSerializer, clientDeserializer } from "../models/models.js";
+import { ReadOptionalParams } from "./options.js";
+import {
+  StreamableMethod,
+  PathUncheckedResponse,
+  createRestError,
+  operationOptionsToRequestParameters,
+} from "@azure-rest/core-client";
+
+export function _readSend(
+  context: Client,
+  body: Client_1,
+  options: ReadOptionalParams = { requestOptions: {} },
+): StreamableMethod {
+  return context
+    .path("/")
+    .post({
+      ...operationOptionsToRequestParameters(options),
+      contentType: "application/json",
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
+      body: clientSerializer(body),
+    });
+}
+
+export async function _readDeserialize(result: PathUncheckedResponse): Promise<Client_1> {
+  const expectedStatuses = ["200"];
+  if (!expectedStatuses.includes(result.status)) {
+    throw createRestError(result);
+  }
+
+  return clientDeserializer(result.body);
+}
+
+export async function read(
+  context: Client,
+  body: Client_1,
+  options: ReadOptionalParams = { requestOptions: {} },
+): Promise<Client_1> {
+  const result = await _readSend(context, body, options);
+  return _readDeserialize(result);
 }
 ```

@@ -67,21 +67,18 @@ export function _fooSend(
   context: Client,
   options: FooOptionalParams = { requestOptions: {} },
 ): StreamableMethod {
-  context.pipeline.removePolicy({ name: "ClientApiVersionPolicy" });
   return context
     .path("/")
     .get({
       ...operationOptionsToRequestParameters(options),
       headers: {
-        "api-version": context.apiVersion,
+        "api-version": context.apiVersion ?? "2021-10-01-preview",
         ...options.requestOptions?.headers,
       },
     });
 }
 
-export async function _fooDeserialize(
-  result: PathUncheckedResponse,
-): Promise<void> {
+export async function _fooDeserialize(result: PathUncheckedResponse): Promise<void> {
   const expectedStatuses = ["204"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);

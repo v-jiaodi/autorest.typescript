@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CodeTransparencyContext as Client } from "./index.js";
-import { JwksDocument, jwksDocumentDeserializer } from "../models/models.js";
+import { JwksDocument, _getPublicKeysUnionResponseDeserializer } from "../models/models.js";
 import { getBinaryResponse } from "../static-helpers/serialization/get-binary-response.js";
 import { expandUrlTemplate } from "../static-helpers/urlTemplate.js";
 import {
@@ -29,7 +29,7 @@ export function _getEntryStatementSend(
     "/entries/{entryId}/statement{?api%2Dversion}",
     {
       entryId: entryId,
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -39,10 +39,7 @@ export function _getEntryStatementSend(
     .path(path)
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/cose",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/cose", ...options.requestOptions?.headers },
     });
 }
 
@@ -77,7 +74,7 @@ export function _getEntrySend(
     "/entries/{entryId}{?api%2Dversion}",
     {
       entryId: entryId,
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -87,16 +84,11 @@ export function _getEntrySend(
     .path(path)
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/cose",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/cose", ...options.requestOptions?.headers },
     });
 }
 
-export async function _getEntryDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Uint8Array> {
+export async function _getEntryDeserialize(result: PathUncheckedResponse): Promise<Uint8Array> {
   const expectedStatuses = ["200", "400", "404", "429", "500", "503"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -125,7 +117,7 @@ export function _getOperationSend(
     "/operations/{operationId}{?api%2Dversion}",
     {
       operationId: operationId,
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -135,16 +127,11 @@ export function _getOperationSend(
     .path(path)
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/cbor",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/cbor", ...options.requestOptions?.headers },
     });
 }
 
-export async function _getOperationDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Uint8Array> {
+export async function _getOperationDeserialize(result: PathUncheckedResponse): Promise<Uint8Array> {
   const expectedStatuses = ["200", "202", "400", "404", "429", "500", "503"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -158,8 +145,9 @@ export async function getOperation(
   context: Client,
   operationId: string,
   options: GetOperationOptionalParams = { requestOptions: {} },
-): Promise<Uint8Array | null> {
-  const result = await _getOperationSend(context, operationId, options);
+): Promise<Uint8Array> {
+  const streamableMethod = _getOperationSend(context, operationId, options);
+  const result = await getBinaryResponse(streamableMethod);
   return _getOperationDeserialize(result);
 }
 
@@ -171,7 +159,7 @@ export function _createEntrySend(
   const path = expandUrlTemplate(
     "/entries{?api%2Dversion}",
     {
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -182,17 +170,12 @@ export function _createEntrySend(
     .post({
       ...operationOptionsToRequestParameters(options),
       contentType: "application/cose",
-      headers: {
-        accept: "application/cose; application/cbor",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/cose; application/cbor", ...options.requestOptions?.headers },
       body: body,
     });
 }
 
-export async function _createEntryDeserialize(
-  result: PathUncheckedResponse,
-): Promise<Uint8Array> {
+export async function _createEntryDeserialize(result: PathUncheckedResponse): Promise<Uint8Array> {
   const expectedStatuses = ["201", "202", "400", "404", "429", "500", "503"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
@@ -219,7 +202,7 @@ export function _getPublicKeysSend(
   const path = expandUrlTemplate(
     "/jwks{?api%2Dversion}",
     {
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -229,22 +212,19 @@ export function _getPublicKeysSend(
     .path(path)
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/json",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/json", ...options.requestOptions?.headers },
     });
 }
 
 export async function _getPublicKeysDeserialize(
   result: PathUncheckedResponse,
-): Promise<JwksDocument> {
+): Promise<JwksDocument | Uint8Array> {
   const expectedStatuses = ["200", "400", "404", "429", "500", "503"];
   if (!expectedStatuses.includes(result.status)) {
     throw createRestError(result);
   }
 
-  return jwksDocumentDeserializer(result.body);
+  return _getPublicKeysUnionResponseDeserializer(result.body);
 }
 
 /** Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation */
@@ -263,7 +243,7 @@ export function _getTransparencyConfigCborSend(
   const path = expandUrlTemplate(
     "/.well-known/transparency-configuration{?api%2Dversion}",
     {
-      "api%2Dversion": context.apiVersion,
+      "api%2Dversion": context.apiVersion ?? "2025-01-31-preview",
     },
     {
       allowReserved: options?.requestOptions?.skipUrlEncoding,
@@ -273,10 +253,7 @@ export function _getTransparencyConfigCborSend(
     .path(path)
     .get({
       ...operationOptionsToRequestParameters(options),
-      headers: {
-        accept: "application/cbor",
-        ...options.requestOptions?.headers,
-      },
+      headers: { accept: "application/cbor", ...options.requestOptions?.headers },
     });
 }
 

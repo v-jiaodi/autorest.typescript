@@ -15,7 +15,7 @@ export class CodeTransparencyClient {
     createEntry(body: Uint8Array, options?: CreateEntryOptionalParams): Promise<Uint8Array>;
     getEntry(entryId: string, options?: GetEntryOptionalParams): Promise<Uint8Array>;
     getEntryStatement(entryId: string, options?: GetEntryStatementOptionalParams): Promise<Uint8Array>;
-    getOperation(operationId: string, options?: GetOperationOptionalParams): Promise<Uint8Array | null>;
+    getOperation(operationId: string, options?: GetOperationOptionalParams): Promise<Uint8Array>;
     getPublicKeys(options?: GetPublicKeysOptionalParams): Promise<JwksDocument | Uint8Array>;
     getTransparencyConfigCbor(options?: GetTransparencyConfigCborOptionalParams): Promise<Uint8Array>;
     readonly pipeline: Pipeline;

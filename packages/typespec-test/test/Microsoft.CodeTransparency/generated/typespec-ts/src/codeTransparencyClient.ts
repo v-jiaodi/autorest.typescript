@@ -69,7 +69,7 @@ export class CodeTransparencyClient {
   getOperation(
     operationId: string,
     options: GetOperationOptionalParams = { requestOptions: {} },
-  ): Promise<Uint8Array | null> {
+  ): Promise<Uint8Array> {
     return getOperation(this._client, operationId, options);
   }
 
