@@ -170,7 +170,7 @@ import { DefaultAzureCredential } from "@azure/identity";
  */
 async function operationsList(): Promise<void> {
   const credential = new DefaultAzureCredential();
-  const subscriptionId = "00000000-0000-0000-0000-000000000000";
+  const subscriptionId = "00000000-0000-0000-0000-00000000000";
   const client = new ContosoClient(credential, subscriptionId);
   const resArray = new Array();
   for await (const item of client.list()) {
@@ -318,12 +318,11 @@ import { DefaultAzureCredential } from "@azure/identity";
 async function employeesCreateOrUpdate(): Promise<void> {
   const credential = new DefaultAzureCredential();
   const client = new ContosoClient(credential);
-  const result = await client.createOrUpdate(
-    "11809CA1-E126-4017-945E-AA795CD5C5A9",
-    "rgopenapi",
-    "9KF-f-8b",
-    { properties: { age: 30 }, tags: { key2913: "urperxmkkhhkp" }, location: "itajgxyqozseoygnl" },
-  );
+  const result = await client.createOrUpdate("rgopenapi", "9KF-f-8b", {
+    properties: { age: 30 },
+    tags: { key2913: "urperxmkkhhkp" },
+    location: "itajgxyqozseoygnl",
+  });
   console.log(result);
 }
 
@@ -579,13 +578,13 @@ import { DefaultAzureCredential } from "@azure/identity";
  */
 async function employeesCreateOrUpdate(): Promise<void> {
   const credential = new DefaultAzureCredential();
-  const client = new ContosoClient(credential);
-  const result = await client.createOrUpdate(
-    "11809CA1-E126-4017-945E-AA795CD5C5A9",
-    "rgopenapi",
-    "9KF-f-8b",
-    { properties: { age: 30 }, tags: { key2913: "urperxmkkhhkp" }, location: "itajgxyqozseoygnl" },
-  );
+  const subscriptionId = "11809CA1-E126-4017-945E-AA795CD5C5A9";
+  const client = new ContosoClient(credential, subscriptionId);
+  const result = await client.createOrUpdate("rgopenapi", "9KF-f-8b", {
+    properties: { age: 30 },
+    tags: { key2913: "urperxmkkhhkp" },
+    location: "itajgxyqozseoygnl",
+  });
   console.log(result);
 }
 
@@ -636,7 +635,8 @@ import { DefaultAzureCredential } from "@azure/identity";
  */
 async function skusOperationsListSkus(): Promise<void> {
   const credential = new DefaultAzureCredential();
-  const client = new ContosoClient(credential);
+  const subscriptionId = "00000000-0000-0000-0000-00000000000";
+  const client = new ContosoClient(credential, subscriptionId);
   const result = await client.listSkus("Standard");
   console.log(result);
 }
@@ -682,7 +682,7 @@ import { DefaultAzureCredential } from "@azure/identity";
  */
 async function operationsList(): Promise<void> {
   const credential = new DefaultAzureCredential();
-  const subscriptionId = "00000000-0000-0000-0000-000000000000";
+  const subscriptionId = "00000000-0000-0000-0000-00000000000";
   const client = new ContosoClient(credential, subscriptionId);
   const resArray = new Array();
   for await (const item of client.list()) {

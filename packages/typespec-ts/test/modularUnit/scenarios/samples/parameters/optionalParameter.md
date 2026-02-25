@@ -77,8 +77,9 @@ import { SampleServiceClient } from "@azure/internal-test";
  * x-ms-original-file: 2021-10-01-preview/json.json
  */
 async function listPersons(): Promise<void> {
+  const endpoint = process.env.SAMPLE_SERVICE_ENDPOINT || "";
   const storage = process.env.SAMPLE_SERVICE_STORAGE || "";
-  const client = new SampleServiceClient(storage);
+  const client = new SampleServiceClient(endpoint, storage);
   const result = await client.list({ start: "00000000-0000-0000-0000-000000000000", top: 20 });
   console.log(result);
 }

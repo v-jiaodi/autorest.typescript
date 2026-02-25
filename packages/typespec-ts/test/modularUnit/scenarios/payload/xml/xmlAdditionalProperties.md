@@ -49,10 +49,14 @@ export function blobMetadataXmlDeserializer(xmlString: string): BlobMetadata {
       primitiveSubtype: "string",
     },
   ];
-  return deserializeFromXml<BlobMetadata>(xmlString, properties, "BlobMetadata", undefined, undefined, {
-    propertyName: "additionalProperties",
-    excludeNames: ["Encrypted"],
-  });
+  return deserializeFromXml<BlobMetadata>(
+    xmlString,
+    properties,
+    "BlobMetadata",
+    undefined,
+    undefined,
+    { propertyName: "additionalProperties", excludeNames: ["Encrypted"] },
+  );
 }
 ```
 
@@ -117,12 +121,7 @@ export function blobMetadataXmlSerializer(item: BlobMetadata): string {
 ```
 
 ```ts models function blobMetadataXmlObjectSerializer
-export function blobMetadataXmlObjectSerializer(
-  item: BlobMetadata,
-): XmlSerializedObject {
-  return {
-    Encrypted: item["encrypted"],
-    ...item["additionalProperties"],
-  };
+export function blobMetadataXmlObjectSerializer(item: BlobMetadata): XmlSerializedObject {
+  return { Encrypted: item["encrypted"], ...item["additionalProperties"] };
 }
 ```

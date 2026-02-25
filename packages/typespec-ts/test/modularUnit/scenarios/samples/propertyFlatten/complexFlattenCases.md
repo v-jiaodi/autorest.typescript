@@ -221,10 +221,8 @@ async function read(): Promise<void> {
   await client.read({
     widget: {
       baz: "body name",
-      bazPropertiesBaz: [{ x: "bbb" }],
-      bar: [{ x: "xx" }],
-      properties: { baz: 222 },
-      bazProperties2Baz: 111,
+      properties: { baz: [{ x: "bbb" }], bar: [{ x: "xx" }], properties: { baz: 222 } },
+      properties2: { baz: 111 },
     },
   });
 }

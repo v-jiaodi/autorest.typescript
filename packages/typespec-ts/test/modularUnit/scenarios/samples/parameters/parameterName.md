@@ -319,7 +319,7 @@ import { TestingClient } from "@azure/internal-test";
 async function publishDocuments(): Promise<void> {
   const endpoint = process.env.TESTING_ENDPOINT || "";
   const client = new TestingClient(endpoint);
-  await client.publish({ documentType: "Exception", properties: ["stream-1", "stream-2"] });
+  await client.publish();
 }
 
 async function main(): Promise<void> {

@@ -187,10 +187,7 @@ import { FaceServiceClient } from "@azure/internal-test";
 async function createLargeFaceList(): Promise<void> {
   const endpoint = process.env.FACE_SERVICE_ENDPOINT || "";
   const client = new FaceServiceClient(endpoint);
-  await client.create("test_face_list_001", "My Test Face List", {
-    userData: "This is test data",
-    recognitionModel: "recognition_02",
-  });
+  await client.create("test_face_list_001");
 }
 
 async function main(): Promise<void> {
