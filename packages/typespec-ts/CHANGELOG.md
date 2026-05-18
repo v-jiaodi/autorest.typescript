@@ -1,3 +1,7 @@
+## 0.54.0 (2026-05-18)
+
+- [Feature] Add bump-emitter-version skill. Please refer to [#7](https://github.com/Azure/autorest.typescript/pull/7)
+
 ## 0.53.0 (2026-05-13)
 
 - [Feature] Bump TypeSpec dependencies to latest stable. Please refer to [#3959](https://github.com/Azure/autorest.typescript/pull/3959)
